@@ -1,0 +1,39 @@
+from src.repositories.memory_repo import (
+    InMemoryDatabase,
+    IHackathonRepository,
+    IParticipanteRepository,
+    IEquipeRepository,
+    IProjetoRepository,
+    IMentorRepository,
+    IMentoriaRepository,
+    IJuradoRepository,
+    IAvaliacaoRepository,
+    MemoryHackathonRepository,
+    MemoryParticipanteRepository,
+    MemoryEquipeRepository,
+    MemoryProjetoRepository,
+    MemoryMentorRepository,
+    MemoryMentoriaRepository,
+    MemoryJuradoRepository,
+    MemoryAvaliacaoRepository
+)
+
+__all__ = [
+    "InMemoryDatabase",
+    "IHackathonRepository",
+    "IParticipanteRepository",
+    "IEquipeRepository",
+    "IProjetoRepository",
+    "IMentorRepository",
+    "IMentoriaRepository",
+    "IJuradoRepository",
+    "IAvaliacaoRepository",
+    "MemoryHackathonRepository",
+    "MemoryParticipanteRepository",
+    "MemoryEquipeRepository",
+    "MemoryProjetoRepository",
+    "MemoryMentorRepository",
+    "MemoryMentoriaRepository",
+    "MemoryJuradoRepository",
+    "MemoryAvaliacaoRepository"
+]

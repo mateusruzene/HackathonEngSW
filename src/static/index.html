@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackDInf UFPR - Sistema de Gestão de Hackathons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo-group">
+        <div class="badge-ufpr">UFPR</div>
+        <div class="logo-text">
+          <h1>HackDInf <span>Manager</span></h1>
+          <p>Engenharia de Software 2026/1 • Prof. Diego Addan</p>
+        </div>
+      </div>
+      <div class="authors-badge">
+        <span>👨‍💻 <strong>Mateus S. Ruzene</strong> (GRR20221223)</span>
+        <span>👨‍💻 <strong>Gabriel C. de Souza</strong> (GRR20215730)</span>
+      </div>
+      <div class="nav-actions">
+        <button id="btn-seed" class="btn btn-secondary">⚡ Recarregar Demonstração</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Top Stats Bar -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-info">
+          <span class="stat-label">Hackathon Ativo</span>
+          <h3 id="stat-hack-name">Carregando...</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <span class="stat-label">Equipes Inscritas</span>
+          <h3 id="stat-teams-count">0 / 0</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💡</div>
+        <div class="stat-info">
+          <span class="stat-label">Projetos Submetidos</span>
+          <h3 id="stat-projects-count">0</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+          <span class="stat-label">Mentorias & Avaliações</span>
+          <h3 id="stat-evals-count">0 / 0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Grid Layout -->
+    <div class="dashboard-grid">
+      <!-- Left Column: Ranking & Highlights -->
+      <div class="grid-col left-col">
+        <!-- Ranking Section -->
+        <div class="panel ranking-panel">
+          <div class="panel-header">
+            <div>
+              <h2>🥇 Classificação Final dos Projetos</h2>
+              <p>Ordenação por nota média atribuída pelos jurados</p>
+            </div>
+            <button id="btn-refresh-ranking" class="btn btn-sm btn-outline">🔄 Atualizar</button>
+          </div>
+          <div id="podium-container" class="podium-container"></div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Pos.</th>
+                  <th>Projeto</th>
+                  <th>Equipe</th>
+                  <th>Área Temática</th>
+                  <th>Avaliações</th>
+                  <th>Nota Média</th>
+                </tr>
+              </thead>
+              <tbody id="ranking-tbody">
+                <tr><td colspan="6" class="text-center">Carregando classificação...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Equipes e Projetos Panel -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>👥 Equipes e Projetos Registrados</h2>
+          </div>
+          <div id="teams-list" class="teams-cards-grid"></div>
+        </div>
+      </div>
+
+      <!-- Right Column: Operations and Forms -->
+      <div class="grid-col right-col">
+        <!-- Actions Accordion / Tabs -->
+        <div class="panel forms-panel">
+          <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="tab-part">Participante</button>
+            <button class="tab-btn" data-tab="tab-team">Equipe</button>
+            <button class="tab-btn" data-tab="tab-proj">Projeto</button>
+            <button class="tab-btn" data-tab="tab-ment">Mentoria</button>
+            <button class="tab-btn" data-tab="tab-eval">Avaliação</button>
+          </div>
+
+          <!-- Tab: Participante -->
+          <div id="tab-part" class="tab-content active">
+            <h3>[ECU 002] Cadastrar Participante</h3>
+            <form id="form-participante">
+              <div class="form-group">
+                <label>Nome Completo:</label>
+                <input type="text" id="part-nome" required placeholder="Ex: Maria Eduarda">
+              </div>
+              <div class="form-group">
+                <label>E-mail:</label>
+                <input type="email" id="part-email" required placeholder="Ex: maria.eduarda@ufpr.br">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Curso:</label>
+                  <input type="text" id="part-curso" required placeholder="Ciência da Computação">
+                </div>
+                <div class="form-group">
+                  <label>Matrícula (GRR):</label>
+                  <input type="text" id="part-grr" required placeholder="GRR20240001">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Salvar Participante</button>
+            </form>
+          </div>
+
+          <!-- Tab: Equipe -->
+          <div id="tab-team" class="tab-content">
+            <h3>[ECU 003] Inscrever Equipe</h3>
+            <form id="form-equipe">
+              <div class="form-group">
+                <label>Nome da Equipe:</label>
+                <input type="text" id="team-nome" required placeholder="Ex: Algoritmo Vencedor">
+              </div>
+              <div class="form-group">
+                <label>Selecione os Participantes:</label>
+                <div id="participants-checkbox-list" class="checkbox-box"></div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Inscrever Equipe</button>
+            </form>
+          </div>
+
+          <!-- Tab: Projeto -->
+          <div id="tab-proj" class="tab-content">
+            <h3>[ECU 004] Registrar Projeto da Equipe</h3>
+            <form id="form-projeto">
+              <div class="form-group">
+                <label>Equipe Responsável:</label>
+                <select id="proj-team-select" required></select>
+              </div>
+              <div class="form-group">
+                <label>Título do Projeto:</label>
+                <input type="text" id="proj-titulo" required placeholder="Ex: Sistema de Triagem IA">
+              </div>
+              <div class="form-group">
+                <label>Área Temática:</label>
+                <input type="text" id="proj-area" required placeholder="Ex: Inteligência Artificial, Saúde, Sustentabilidade">
+              </div>
+              <div class="form-group">
+                <label>Descrição da Proposta:</label>
+                <textarea id="proj-desc" rows="3" required placeholder="Resumo dos objetivos e da solução proposta..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Registrar Projeto</button>
+            </form>
+          </div>
+
+          <!-- Tab: Mentoria -->
+          <div id="tab-ment" class="tab-content">
+            <h3>[ECU 006] Registrar Mentoria</h3>
+            <form id="form-mentoria">
+              <div class="form-group">
+                <label>Mentor Responsável:</label>
+                <select id="ment-mentor-select" required></select>
+              </div>
+              <div class="form-group">
+                <label>Equipe Atendida:</label>
+                <select id="ment-team-select" required></select>
+              </div>
+              <div class="form-group">
+                <label>Comentários & Orientações:</label>
+                <textarea id="ment-comentarios" rows="3" required placeholder="Orientação técnica, sugestões de arquitetura..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Registrar Mentoria</button>
+            </form>
+          </div>
+
+          <!-- Tab: Avaliação -->
+          <div id="tab-eval" class="tab-content">
+            <h3>[ECU 007] Registrar Avaliação (Jurados)</h3>
+            <form id="form-avaliacao">
+              <div class="form-group">
+                <label>Jurado Avaliador:</label>
+                <select id="eval-jurado-select" required></select>
+              </div>
+              <div class="form-group">
+                <label>Projeto Avaliado:</label>
+                <select id="eval-proj-select" required></select>
+              </div>
+              <div class="form-group">
+                <label>Nota (0.0 a 10.0):</label>
+                <input type="number" step="0.1" min="0" max="10" id="eval-nota" required placeholder="9.5">
+              </div>
+              <div class="form-group">
+                <label>Parecer / Comentários:</label>
+                <textarea id="eval-comentarios" rows="3" required placeholder="Justificativa da nota, pontos fortes e melhorias..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Salvar Avaliação</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Mentores e Jurados List -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>👨‍🏫 Mentores e Jurados Cadastrados</h2>
+          </div>
+          <div class="mentores-jurados-grid">
+            <div>
+              <h4 class="subhead">Mentores</h4>
+              <ul id="mentores-list" class="tag-list"></ul>
+            </div>
+            <div>
+              <h4 class="subhead">Jurados</h4>
+              <ul id="jurados-list" class="tag-list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>Departamento de Informática - UFPR | Engenharia de Software 2026/1</p>
+      <p>Projeto Orientado a Objetos com UML, GRASP e Arquitetura Limpa</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
