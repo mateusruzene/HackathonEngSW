@@ -1,0 +1,11 @@
+- [] Faça algo simples fácil de entender
+- [] Deixar o teste somente na web (fazer um front melhor)
+- [] Front vite + reactjs + typescript + zod (com tailwind)
+- [] Trocar os repositorios para sqlite (Banco de Dados)
+- [] Trocar a stack para nodejs com fastfy e knexjs + typescript + zod + docker 
+- [] Relatório em Latex (utilize o modelo da pasta ModeloLatex)
+- [] Revisar/refazer os diagramas UML
+- [] Utilizar mermaid para fazer os diagramas
+- [] Colocar o frontend em outra pasta /src/client
+- [] Não inventar moda porra
+- [] Frontend deve ser separado (pagina do estudante...)
