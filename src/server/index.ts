@@ -57,8 +57,16 @@ export async function startServer() {
     await fastify.register(apiRoutes, { prefix: '/api' });
 
     // 5. Servir arquivos estáticos do frontend React compilado
-    const clientDistPath = path.resolve(__dirname, '../../client/dist');
-    if (fs.existsSync(clientDistPath)) {
+    const possiblePaths = [
+      path.resolve(process.cwd(), 'src/client/dist'),
+      path.resolve(__dirname, '../client/dist'),
+      path.resolve(__dirname, '../../src/client/dist'),
+      path.resolve(__dirname, '../../../src/client/dist')
+    ];
+    const clientDistPath = possiblePaths.find(p => fs.existsSync(p));
+
+    if (clientDistPath) {
+      fastify.log.info(`Frontend React localizado em: ${clientDistPath}`);
       await fastify.register(fastifyStatic, {
         root: clientDistPath,
         prefix: '/'
@@ -71,6 +79,8 @@ export async function startServer() {
         }
         return reply.code(404).send({ error: 'NotFound', message: 'Endpoint da API não encontrado.' });
       });
+    } else {
+      fastify.log.warn('Diretório dist do frontend não foi encontrado. O servidor responderá apenas às rotas de /api.');
     }
 
     const port = parseInt(process.env.PORT || '3000', 10);

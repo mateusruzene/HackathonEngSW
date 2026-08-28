@@ -38,19 +38,34 @@ Todos os diagramas foram modelados em código Mermaid (`docs/mermaid/`) e export
 
 ## 🚀 3. Guia Rápido de Instalação e Execução
 
-### Opção A: Execução Local com Node.js
+### Opção A: Modo Desenvolvimento (Live Reload com Vite + Fastify)
 
-#### Passo 1: Instalar as Dependências
+Ideal para desenvolvimento ativo, com hot-reloading tanto no frontend quanto no backend.
+
 ```bash
-# Na raiz do projeto:
+# 1. Instalar as dependências da raiz (backend) e do cliente (frontend):
 npm install
+cd src/client && npm install && cd ../..
 
-# No cliente React:
-cd src/client && npm install && npm run build && cd ../..
+# 2. Iniciar ambos os servidores simultaneamente:
+npm run dev
 ```
 
-#### Passo 2: Iniciar a Aplicação Web
+- **Frontend (Vite com Hot-Reload)**: [http://localhost:5173](http://localhost:5173) (as chamadas `/api` são redirecionadas automaticamente para o backend via proxy).
+- **Backend API (Fastify com tsx watch)**: [http://localhost:3000](http://localhost:3000)
+
+---
+
+### Opção B: Execução Local em Produção (Node.js)
+
+Compila o frontend React e executa o servidor Fastify servindo a aplicação unificada na porta 3000.
+
 ```bash
+# 1. Instalar dependências e compilar o frontend e backend:
+npm install
+npm run build
+
+# 2. Iniciar o servidor integrado:
 npm start
 ```
 Abra o navegador em: **[http://localhost:3000](http://localhost:3000)**
@@ -59,12 +74,60 @@ Abra o navegador em: **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
-### Opção B: Execução com Docker
+### Opção C: Execução com Docker (Terminal / Docker Compose)
 
+Tanto o frontend (multi-stage build) quanto o backend e o banco de dados SQLite são empacotados em um único container otimizado.
+
+#### 1. Iniciar com Docker Compose (Recomendado):
 ```bash
+# Build e execução dos containers:
 docker compose up --build
+
+# Ou via atalho do npm:
+npm run docker:up
 ```
-Acesse em **http://localhost:3000**.
+
+Para rodar em **segundo plano (detached mode)**:
+```bash
+docker compose up -d --build
+```
+
+Para **parar** os containers:
+```bash
+docker compose down
+# ou: npm run docker:down
+```
+
+#### 2. Iniciar via comandos manuais do Docker (sem Compose):
+```bash
+# Construir a imagem:
+docker build -t hackathon-ufpr .
+
+# Executar o container com persistência do SQLite:
+docker run -d -p 3000:3000 -v $(pwd)/data:/app/data --name hackathon_ufpr_app hackathon-ufpr
+```
+
+Acesse a aplicação em: **[http://localhost:3000](http://localhost:3000)**.
+
+---
+
+### Opção D: Execução com Docker Desktop
+
+Se você prefere gerenciar containers visualmente através do **Docker Desktop**:
+
+1. **Abrir o Docker Desktop**: Certifique-se de que o Docker Desktop está aberto e com o status *Engine Running* (ícone verde no rodapé).
+2. **Construir e Subir**:
+   - Abra o terminal do seu sistema (ou o terminal integrado do Docker Desktop / IDE) na raiz do projeto e execute:
+     ```bash
+     docker compose up --build -d
+     ```
+3. **Gerenciar no Docker Desktop**:
+   - Na aba **Containers**, localize o container `hackathon_ufpr_app` (ou o grupo `t1`).
+   - **Acessar a Aplicação**: Clique no link azul `3000:3000` em *Port(s)* para abrir automaticamente o navegador em `http://localhost:3000`.
+   - **Ver Logs**: Clique no nome do container para acompanhar os logs de inicialização do Fastify e requisições HTTP em tempo real.
+   - **Terminal Interativo**: Use a aba *Exec* dentro do container caso precise inspecionar arquivos ou rodar comandos (`npm test`, etc.).
+   - **Persistência**: Na aba **Volumes**, o volume `sqlite_data` garante que seus dados do banco SQLite não sejam perdidos ao reiniciar o container.
+   - **Parar / Reiniciar**: Use os botões *Stop* (⏹️), *Restart* (🔄) ou *Delete* (🗑️) diretamente pela interface gráfica.
 
 ---
 
