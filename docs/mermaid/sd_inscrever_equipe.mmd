@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    actor UI as Web Client / UI
+    participant C as :EquipeController
+    participant HR as :HackathonRepository
+    participant ER as :EquipeRepository
+    participant PR as :ParticipanteRepository
+    participant H as :Hackathon
+    participant E as :Equipe
+
+    UI->>C: inscreverEquipe(hackathonId, nome, participanteIds)
+    activate C
+    C->>HR: buscarPorId(hackathonId)
+    HR-->>C: hackathon
+    C->>ER: listarPorHackathon(hackathonId)
+    ER-->>C: equipesExistentes
+    
+    C->>H: podeReceberEquipe(equipesExistentes.length)
+    alt Hackathon lotado
+        H-->>C: false
+        C-->>UI: Erro("Hackathon lotado")
+    else Hackathon com vagas
+        H-->>C: true
+        loop Para cada participanteId
+            C->>ER: participanteJaInscrito(hackathonId, participanteId)
+            ER-->>C: jaInscrito
+            opt jaInscrito == true
+                C-->>UI: Erro("Participante já em outra equipe")
+            end
+        end
+        C->>E: new Equipe(nome, hackathonId)
+        C->>ER: salvar(equipe, participanteIds)
+        ER-->>C: equipeCriada
+        C-->>UI: Sucesso(equipeCriada)
+    end
+    deactivate C

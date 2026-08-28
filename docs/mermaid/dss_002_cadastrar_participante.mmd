@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    actor P as Participante
+    participant S as :Sistema
+
+    P->>S: cadastrarParticipante(nome, email, curso, grr)
+    alt GRR ou e-mail já existente
+        S-->>P: erro("Participante já cadastrado com este GRR ou E-mail")
+    else Dados válidos
+        S-->>P: confirmação(id, dadosParticipante)
+    end

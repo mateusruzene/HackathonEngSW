@@ -1,0 +1,112 @@
+classDiagram
+    direction TB
+
+    class Hackathon {
+        +id: Integer
+        +nome: String
+        +dataInicio: Date
+        +dataTermino: Date
+        +maxEquipes: Integer
+        +descricao: String
+        +podeReceberEquipe(totalAtual: Integer) Boolean
+    }
+
+    class Participante {
+        +id: Integer
+        +nome: String
+        +email: String
+        +curso: String
+        +grr: String
+        +validarEmailUfpr() Boolean
+    }
+
+    class Equipe {
+        +id: Integer
+        +hackathonId: Integer
+        +nome: String
+        +dataCriacao: Date
+    }
+
+    class Projeto {
+        +id: Integer
+        +equipeId: Integer
+        +titulo: String
+        +descricao: String
+        +areaTematica: String
+        +calcularNotaMedia(avaliacoes: List~Avaliacao~) Float
+    }
+
+    class Mentor {
+        +id: Integer
+        +nome: String
+        +email: String
+        +especialidade: String
+    }
+
+    class Mentoria {
+        +id: Integer
+        +mentorId: Integer
+        +equipeId: Integer
+        +dataHora: DateTime
+        +comentarios: String
+    }
+
+    class Jurado {
+        +id: Integer
+        +nome: String
+        +email: String
+        +areaAtuacao: String
+    }
+
+    class Avaliacao {
+        +id: Integer
+        +juradoId: Integer
+        +projetoId: Integer
+        +nota: Float
+        +comentarios: String
+        +dataHora: DateTime
+        +validarNota() Boolean
+    }
+
+    class ItemClassificacao {
+        +posicao: Integer
+        +equipeId: Integer
+        +nomeEquipe: String
+        +projetoTitulo: String
+        +notaMedia: Float
+        +totalAvaliacoes: Integer
+    }
+
+    class HackathonController {
+        +criarHackathon(dados) Object
+        +listarHackathons() List
+        +obterDashboard(hackathonId) Object
+    }
+
+    class EquipeController {
+        +inscreverEquipe(hackathonId, nome, participanteIds) Object
+        +listarEquipes(hackathonId) List
+    }
+
+    class ProjetoController {
+        +registrarProjeto(equipeId, titulo, descricao, areaTematica) Object
+        +obterProjetoPorEquipe(equipeId) Object
+    }
+
+    class AvaliacaoController {
+        +registrarAvaliacao(juradoId, projetoId, nota, comentarios) Object
+        +listarAvaliacoesPorProjeto(projetoId) List
+    }
+
+    class ClassificacaoController {
+        +determinarClassificacao(hackathonId) List~ItemClassificacao~
+    }
+
+    Hackathon "1" --> "0..*" Equipe : agrega
+    Equipe "1" --> "1..*" Participante : vincula
+    Equipe "1" --> "0..1" Projeto : contem
+    Projeto "1" --> "0..*" Avaliacao : recebe
+    Mentor "1" --> "0..*" Mentoria : ministra
+    Mentoria "0..*" --> "1" Equipe : atende
+    Jurado "1" --> "0..*" Avaliacao : emite
+    ClassificacaoController ..> ItemClassificacao : produz

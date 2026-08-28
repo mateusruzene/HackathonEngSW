@@ -1,0 +1,23 @@
+import knex, { Knex } from 'knex';
+import path from 'path';
+import fs from 'fs';
+
+const dataDir = path.resolve(process.cwd(), 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+
+const dbPath = process.env.DB_PATH || path.join(dataDir, 'hackathon.sqlite');
+
+export const db: Knex = knex({
+  client: 'sqlite3',
+  connection: {
+    filename: dbPath
+  },
+  useNullAsDefault: true,
+  pool: {
+    afterCreate: (conn: any, cb: any) => {
+      conn.run('PRAGMA foreign_keys = ON', cb);
+    }
+  }
+});

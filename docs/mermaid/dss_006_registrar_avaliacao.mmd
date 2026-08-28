@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    actor J as Jurado
+    participant S as :Sistema
+
+    J->>S: registrarAvaliacao(juradoId, projetoId, nota, comentarios)
+    alt Nota fora do intervalo permitido [0.0, 10.0]
+        S-->>J: erro("A nota deve estar estritamente entre 0.0 e 10.0")
+    else Projeto ou jurado inválidos
+        S-->>J: erro("Jurado ou Projeto não encontrados")
+    else Avaliação registrada com sucesso
+        S-->>J: confirmação(id, dadosAvaliacao)
+    end

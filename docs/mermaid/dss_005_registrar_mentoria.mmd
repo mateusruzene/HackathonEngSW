@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    actor M as Mentor
+    participant S as :Sistema
+
+    M->>S: registrarMentoria(mentorId, equipeId, comentarios, dataHora)
+    alt Mentor ou equipe não encontrados
+        S-->>M: erro("Mentor ou Equipe inválidos")
+    else Mentoria registrada com sucesso
+        S-->>M: confirmação(id, dadosMentoria)
+    end

@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    actor P as Participante
+    participant S as :Sistema
+
+    P->>S: inscreverEquipe(hackathonId, nomeEquipe, listaParticipantesIds)
+    alt Hackathon atingiu capacidade máxima (maxEquipes)
+        S-->>P: erro("Hackathon lotado. Limite de equipes atingido.")
+    else Participante já inscrito em outra equipe no mesmo evento
+        S-->>P: erro("Participante já cadastrado em outra equipe neste Hackathon.")
+    else Inscrição válida
+        S-->>P: confirmação(id, dadosEquipe, membros)
+    end

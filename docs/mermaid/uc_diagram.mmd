@@ -1,0 +1,27 @@
+flowchart LR
+    Organizador((Organizador))
+    Participante((Participante))
+    Mentor((Mentor))
+    Jurado((Jurado))
+
+    subgraph Sistema_Hackathon ["Sistema de Gestão de Hackathons Acadêmicos (DInf/UFPR)"]
+        UC1(["UC01: Cadastrar Hackathon"])
+        UC2(["UC02: Cadastrar Participante"])
+        UC3(["UC03: Inscrever Equipe"])
+        UC4(["UC04: Registrar Projeto"])
+        UC5(["UC05: Registrar Mentoria"])
+        UC6(["UC06: Registrar Avaliação"])
+        UC7(["UC07: Determinar Classificação Final"])
+        UC8(["UC08: Consultar Informações"])
+    end
+
+    Organizador --> UC1
+    Organizador --> UC7
+    Organizador --> UC8
+
+    Participante --> UC2
+    Participante --> UC3
+    Participante --> UC4
+
+    Mentor --> UC5
+    Jurado --> UC6

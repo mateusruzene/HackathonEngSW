@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    actor P as Participante
+    participant S as :Sistema
+
+    P->>S: registrarProjeto(equipeId, titulo, descricao, areaTematica)
+    alt Equipe já possui projeto registrado
+        S-->>P: erro("Equipe já possui um projeto cadastrado no Hackathon.")
+    else Dados válidos
+        S-->>P: confirmação(id, dadosProjeto)
+    end

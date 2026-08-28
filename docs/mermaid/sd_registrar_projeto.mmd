@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor UI as Web Client / UI
+    participant C as :ProjetoController
+    participant ER as :EquipeRepository
+    participant PR as :ProjetoRepository
+    participant P as :Projeto
+
+    UI->>C: registrarProjeto(equipeId, titulo, descricao, areaTematica)
+    activate C
+    C->>ER: buscarPorId(equipeId)
+    ER-->>C: equipe
+    C->>PR: buscarPorEquipeId(equipeId)
+    PR-->>C: projetoExistente
+
+    alt projetoExistente != null
+        C-->>UI: Erro("Equipe já possui projeto cadastrado")
+    else Projeto inédito
+        C->>P: new Projeto(equipeId, titulo, descricao, areaTematica)
+        C->>PR: salvar(projeto)
+        PR-->>C: projetoSalvo
+        C-->>UI: Sucesso(projetoSalvo)
+    end
+    deactivate C

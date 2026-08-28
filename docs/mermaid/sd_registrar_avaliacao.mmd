@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor UI as Web Client / UI
+    participant C as :AvaliacaoController
+    participant JR as :JuradoRepository
+    participant PR as :ProjetoRepository
+    participant AR as :AvaliacaoRepository
+    participant A as :Avaliacao
+
+    UI->>C: registrarAvaliacao(juradoId, projetoId, nota, comentarios)
+    activate C
+    alt nota < 0.0 OU nota > 10.0
+        C-->>UI: Erro("Nota deve estar entre 0.0 e 10.0")
+    else Nota válida
+        C->>JR: buscarPorId(juradoId)
+        JR-->>C: jurado
+        C->>PR: buscarPorId(projetoId)
+        PR-->>C: projeto
+        C->>A: new Avaliacao(juradoId, projetoId, nota, comentarios)
+        C->>AR: salvar(avaliacao)
+        AR-->>C: avaliacaoSalva
+        C-->>UI: Sucesso(avaliacaoSalva)
+    end
+    deactivate C

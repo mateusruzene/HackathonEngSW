@@ -1,0 +1,26 @@
+sequenceDiagram
+    autonumber
+    actor UI as Web Client / UI
+    participant C as :ClassificacaoController
+    participant ER as :EquipeRepository
+    participant PR as :ProjetoRepository
+    participant AR as :AvaliacaoRepository
+    participant P as :Projeto
+
+    UI->>C: calcularClassificacaoFinal(hackathonId)
+    activate C
+    C->>ER: listarPorHackathon(hackathonId)
+    ER-->>C: listaEquipes
+    loop Para cada equipe
+        C->>PR: buscarPorEquipeId(equipe.id)
+        PR-->>C: projeto
+        opt Se projeto existe
+            C->>AR: listarPorProjeto(projeto.id)
+            AR-->>C: avaliacoes
+            C->>P: calcularNotaMedia(avaliacoes)
+            P-->>C: mediaCalculada
+        end
+    end
+    C->>C: ordenarRankingDecrescente()
+    C-->>UI: rankingFinal(itensClassificados)
+    deactivate C

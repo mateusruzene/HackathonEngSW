@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    actor O as Organizador
+    participant S as :Sistema
+
+    O->>S: cadastrarHackathon(nome, dataInicio, dataTermino, maxEquipes, descricao)
+    alt Dados válidos e datas consistentes
+        S-->>O: confirmação(id, dadosHackathon)
+    else Dados inválidos ou limite inconsistente
+        S-->>O: erro("Dados inválidos para criação do Hackathon")
+    end

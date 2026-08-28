@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph Presentation_Layer ["presentation (Camada de Apresentação)"]
+        WebUI["SPA React / Tailwind / TypeScript (src/client)"]
+        APIRoutes["Fastify REST Routes (src/server/routes)"]
+    end
+
+    subgraph Application_Layer ["application (Camada de Aplicação)"]
+        Controllers["Controllers GRASP (Hackathon, Equipe, Projeto, Mentoria, Avaliacao, Classificacao)"]
+    end
+
+    subgraph Domain_Layer ["domain (Camada de Domínio)"]
+        Entities["Entidades de Domínio e Validações Zod (Hackathon, Equipe, Participante, Projeto, Mentor, Mentoria, Jurado, Avaliacao)"]
+        DomainErrors["Exceções e Regras de Negócio"]
+    end
+
+    subgraph Infrastructure_Layer ["infrastructure / repositories (Persistência)"]
+        KnexRepositories["Repositórios Knex.js (SQLite3)"]
+        SQLiteDB[("hackathon.sqlite")]
+    end
+
+    WebUI --> APIRoutes
+    APIRoutes --> Controllers
+    Controllers --> Entities
+    Controllers --> KnexRepositories
+    KnexRepositories --> SQLiteDB
+    KnexRepositories --> Entities

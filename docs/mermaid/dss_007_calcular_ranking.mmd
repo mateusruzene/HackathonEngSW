@@ -1,0 +1,7 @@
+sequenceDiagram
+    autonumber
+    actor O as Organizador / Público
+    participant S as :Sistema
+
+    O->>S: determinarClassificacaoFinal(hackathonId)
+    S-->>O: rankingFinal(listaClassificacaoOrdenada)

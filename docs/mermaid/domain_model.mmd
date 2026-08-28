@@ -1,0 +1,59 @@
+classDiagram
+    direction TB
+
+    class Hackathon {
+        nome: String
+        dataInicio: Date
+        dataTermino: Date
+        maxEquipes: Integer
+        descricao: String
+    }
+
+    class Equipe {
+        nome: String
+        dataCriacao: Date
+    }
+
+    class Participante {
+        nome: String
+        email: String
+        curso: String
+        grr: String
+    }
+
+    class Projeto {
+        titulo: String
+        descricao: String
+        areaTematica: String
+    }
+
+    class Mentor {
+        nome: String
+        email: String
+        especialidade: String
+    }
+
+    class Mentoria {
+        dataHora: DateTime
+        comentarios: String
+    }
+
+    class Jurado {
+        nome: String
+        email: String
+        areaAtuacao: String
+    }
+
+    class Avaliacao {
+        nota: Float
+        comentarios: String
+        dataHora: DateTime
+    }
+
+    Hackathon "1" -- "0..*" Equipe : sedia
+    Equipe "1" -- "1..*" Participante : composta por
+    Equipe "1" -- "0..1" Projeto : desenvolve
+    Mentor "1" -- "0..*" Mentoria : realiza
+    Mentoria "0..*" -- "1" Equipe : orienta
+    Jurado "1" -- "0..*" Avaliacao : atribui
+    Avaliacao "0..*" -- "1" Projeto : avalia
