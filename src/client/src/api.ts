@@ -14,12 +14,18 @@ import {
 const API_BASE = '/api';
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = {
+    ...options?.headers as any
+  };
+
+  // Se houver body e for método que envia dados, garantir Content-Type
+  if (options?.body) {
+    headers['Content-Type'] = 'application/json';
+  }
+
   const res = await fetch(`${API_BASE}${endpoint}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers
-    },
-    ...options
+    ...options,
+    headers
   });
 
   const data = await res.json();
@@ -33,8 +39,11 @@ export const api = {
   // Health
   getHealth: () => request<{ status: string; timestamp: string }>('/health'),
 
-  // Seed / Demonstração
-  carregarDemo: () => request<{ mensagem: string; hackathonId: number }>('/seed', { method: 'POST' }),
+  // Seed / Demonstração UFPR
+  carregarDemo: () => request<{ mensagem: string; hackathonId: number }>('/seed', { 
+    method: 'POST',
+    body: JSON.stringify({}) 
+  }),
 
   // Hackathons
   getHackathons: () => request<Hackathon[]>('/hackathons'),

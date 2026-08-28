@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import RankingPage from './pages/RankingPage';
 import OrganizadorPage from './pages/OrganizadorPage';
@@ -23,7 +24,6 @@ export const App: React.FC = () => {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [ranking, setRanking] = useState<ItemClassificacao[]>([]);
   const [loadingDemo, setLoadingDemo] = useState(false);
-  const [globalNotification, setGlobalNotification] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const setRoute = (route: string) => {
     setCurrentRouteState(route);
@@ -75,7 +75,7 @@ export const App: React.FC = () => {
 
   const handleCarregarDemo = async () => {
     setLoadingDemo(true);
-    setGlobalNotification(null);
+    const toastId = toast.loading('Carregando dados de demonstração da UFPR...');
     try {
       const res = await api.carregarDemo();
       await fetchHackathons();
@@ -83,13 +83,9 @@ export const App: React.FC = () => {
         setSelectedHackathonId(res.hackathonId);
       }
       await refreshHackathonData();
-      setGlobalNotification({
-        type: 'success',
-        text: '⚡ Demonstração do DInf UFPR carregada com sucesso com 3 equipes, projetos, mentores e avaliações!'
-      });
-      setTimeout(() => setGlobalNotification(null), 5000);
+      toast.success('Demonstração UFPR carregada com sucesso!', { id: toastId });
     } catch (err: any) {
-      setGlobalNotification({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao carregar demonstração', { id: toastId });
     } finally {
       setLoadingDemo(false);
     }
@@ -98,6 +94,34 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
       
+      {/* Toast Notifications Container */}
+      <Toaster 
+        position="top-right" 
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#0f172a',
+            color: '#f8fafc',
+            border: '1px solid #1e293b',
+            borderRadius: '12px',
+            fontSize: '13px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)'
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#0f172a',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#f43f5e',
+              secondary: '#0f172a',
+            },
+          }
+        }}
+      />
+
       {/* Top Navigation */}
       <Navbar
         currentRoute={currentRoute}
@@ -108,20 +132,6 @@ export const App: React.FC = () => {
         onCarregarDemo={handleCarregarDemo}
         loadingDemo={loadingDemo}
       />
-
-      {/* Global Notification Toast */}
-      {globalNotification && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
-          <div className={`p-3.5 rounded-xl text-xs font-semibold flex items-center justify-between border shadow-lg ${
-            globalNotification.type === 'success'
-              ? 'bg-emerald-950/90 border-emerald-500/50 text-emerald-200'
-              : 'bg-rose-950/90 border-rose-500/50 text-rose-200'
-          }`}>
-            <span>{globalNotification.text}</span>
-            <button onClick={() => setGlobalNotification(null)} className="text-slate-400 hover:text-white ml-3">✕</button>
-          </div>
-        </div>
-      )}
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">

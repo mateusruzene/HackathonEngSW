@@ -1,8 +1,13 @@
 import knex, { Knex } from 'knex';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-const dataDir = path.resolve(process.cwd(), 'data');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Caminho absoluto fixo para a pasta data/ na raiz do projeto
+const dataDir = path.resolve(__dirname, '../../../data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }

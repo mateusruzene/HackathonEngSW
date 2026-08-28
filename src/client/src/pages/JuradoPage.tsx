@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { 
   Gavel, 
   UserPlus, 
   Star, 
-  CheckCircle2, 
-  AlertCircle,
   FolderKanban
 } from 'lucide-react';
 import { Jurado, Projeto, Avaliacao } from '../types';
@@ -22,7 +21,6 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
   const [jurados, setJurados] = useState<Jurado[]>([]);
   const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
-  const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Form Jurado
@@ -58,21 +56,20 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
   const handleCadastrarJurado = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       const novo = await api.cadastrarJurado({
         nome: nomeJurado,
         email: emailJurado,
         areaAtuacao: areaJurado
       });
-      setStatusMsg({ type: 'success', text: `Jurado "${novo.nome}" cadastrado na banca com sucesso!` });
+      toast.success(`Jurado "${novo.nome}" cadastrado na banca com sucesso!`);
       setNomeJurado('');
       setEmailJurado('');
       setAreaJurado('');
       await loadData();
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao cadastrar jurado');
     } finally {
       setLoading(false);
     }
@@ -81,7 +78,6 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
   const handleRegistrarAvaliacao = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       if (!selectedJuradoId || !selectedProjetoId) {
         throw new Error('Selecione o jurado avaliador e o projeto.');
@@ -96,13 +92,13 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
         nota: notaNum,
         comentarios
       });
-      setStatusMsg({ type: 'success', text: `Avaliação com nota ${notaNum.toFixed(1)} registrada com sucesso!` });
+      toast.success(`Avaliação com nota ${notaNum.toFixed(1)} registrada com sucesso!`);
       setComentarios('');
       setNota(8.5);
       await loadData();
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao registrar avaliação');
     } finally {
       setLoading(false);
     }
@@ -121,15 +117,6 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
           Cadastro de jurados examinadores e atribuição formal de notas (0.0 a 10.0) e pareceres aos projetos.
         </p>
       </div>
-
-      {statusMsg && (
-        <div className={`p-4 rounded-xl text-xs flex items-center gap-2 border ${
-          statusMsg.type === 'success' ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' : 'bg-rose-950/50 border-rose-500/40 text-rose-300'
-        }`}>
-          {statusMsg.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-          <span>{statusMsg.text}</span>
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         

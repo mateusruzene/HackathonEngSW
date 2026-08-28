@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
@@ -8,6 +9,9 @@ import { db } from './database/connection.js';
 import { runMigrations } from './database/migrations.js';
 import { apiRoutes } from './routes/apiRoutes.js';
 import { DomainError } from './domain/errors.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const fastify = Fastify({
   logger: {
@@ -53,7 +57,7 @@ export async function startServer() {
     await fastify.register(apiRoutes, { prefix: '/api' });
 
     // 5. Servir arquivos estáticos do frontend React compilado
-    const clientDistPath = path.resolve(process.cwd(), 'src/client/dist');
+    const clientDistPath = path.resolve(__dirname, '../../client/dist');
     if (fs.existsSync(clientDistPath)) {
       await fastify.register(fastifyStatic, {
         root: clientDistPath,

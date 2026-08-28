@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { 
   PlusCircle, 
   Users, 
   Layers, 
-  Sparkles, 
-  CheckCircle2, 
-  AlertCircle
+  Sparkles
 } from 'lucide-react';
 import { Hackathon, DashboardData } from '../types';
 import { api } from '../api';
@@ -32,13 +31,11 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
   const [dataTermino, setDataTermino] = useState('2026-09-03');
   const [maxEquipes, setMaxEquipes] = useState(5);
   const [descricao, setDescricao] = useState('');
-  const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       const novo = await api.criarHackathon({
         nome,
@@ -47,13 +44,13 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
         maxEquipes: Number(maxEquipes),
         descricao
       });
-      setStatusMsg({ type: 'success', text: `Hackathon "${novo.nome}" cadastrado com sucesso!` });
+      toast.success(`Hackathon "${novo.nome}" cadastrado com sucesso!`);
       setNome('');
       setDescricao('');
       onRefresh();
       setSelectedHackathonId(novo.id);
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao cadastrar hackathon');
     } finally {
       setLoading(false);
     }
@@ -79,15 +76,6 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
           <span>Carregar Demonstração UFPR</span>
         </button>
       </div>
-
-      {statusMsg && (
-        <div className={`p-4 rounded-xl text-xs flex items-center gap-2 border ${
-          statusMsg.type === 'success' ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' : 'bg-rose-950/50 border-rose-500/40 text-rose-300'
-        }`}>
-          {statusMsg.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-          <span>{statusMsg.text}</span>
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         

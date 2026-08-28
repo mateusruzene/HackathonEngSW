@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { 
   Compass, 
   UserPlus, 
   MessageSquare, 
-  CheckCircle2, 
-  AlertCircle,
   FolderKanban
 } from 'lucide-react';
 import { Mentor, Mentoria } from '../types';
@@ -22,7 +21,6 @@ export const MentorPage: React.FC<MentorPageProps> = ({
   const [mentores, setMentores] = useState<Mentor[]>([]);
   const [mentorias, setMentorias] = useState<Mentoria[]>([]);
   const [equipes, setEquipes] = useState<any[]>([]);
-  const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Form Mentor
@@ -57,21 +55,20 @@ export const MentorPage: React.FC<MentorPageProps> = ({
   const handleCadastrarMentor = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       const novo = await api.cadastrarMentor({
         nome: nomeMentor,
         email: emailMentor,
         especialidade
       });
-      setStatusMsg({ type: 'success', text: `Mentor "${novo.nome}" cadastrado com sucesso!` });
+      toast.success(`Mentor "${novo.nome}" cadastrado com sucesso!`);
       setNomeMentor('');
       setEmailMentor('');
       setEspecialidade('');
       await loadData();
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao cadastrar mentor');
     } finally {
       setLoading(false);
     }
@@ -80,7 +77,6 @@ export const MentorPage: React.FC<MentorPageProps> = ({
   const handleRegistrarMentoria = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       if (!selectedMentorId || !selectedEquipeId) {
         throw new Error('Selecione o mentor e a equipe atendida.');
@@ -90,12 +86,12 @@ export const MentorPage: React.FC<MentorPageProps> = ({
         equipeId: Number(selectedEquipeId),
         comentarios
       });
-      setStatusMsg({ type: 'success', text: 'Sessão de mentoria registrada com sucesso!' });
+      toast.success('Sessão de mentoria registrada com sucesso!');
       setComentarios('');
       await loadData();
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao registrar mentoria');
     } finally {
       setLoading(false);
     }
@@ -114,15 +110,6 @@ export const MentorPage: React.FC<MentorPageProps> = ({
           Acompanhamento técnico das equipes participantes por mentores e especialistas.
         </p>
       </div>
-
-      {statusMsg && (
-        <div className={`p-4 rounded-xl text-xs flex items-center gap-2 border ${
-          statusMsg.type === 'success' ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' : 'bg-rose-950/50 border-rose-500/40 text-rose-300'
-        }`}>
-          {statusMsg.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-          <span>{statusMsg.text}</span>
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         

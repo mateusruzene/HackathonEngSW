@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { 
   GraduationCap, 
   UserPlus, 
   Users, 
-  FolderKanban, 
-  CheckCircle2, 
-  AlertCircle
+  FolderKanban
 } from 'lucide-react';
 import { Participante, DashboardData } from '../types';
 import { api } from '../api';
@@ -23,7 +22,6 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'participante' | 'equipe' | 'projeto'>('participante');
   const [participantes, setParticipantes] = useState<Participante[]>([]);
-  const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Form 1: Participante
@@ -58,17 +56,16 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
   const handleCadastrarParticipante = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setStatusMsg(null);
     try {
       const novo = await api.cadastrarParticipante({ nome, email, curso, grr });
-      setStatusMsg({ type: 'success', text: `Participante "${novo.nome}" cadastrado com sucesso!` });
+      toast.success(`Participante "${novo.nome}" cadastrado com sucesso!`);
       setNome('');
       setEmail('');
       setGrr('');
       await loadParticipantes();
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao cadastrar participante');
     } finally {
       setLoading(false);
     }
@@ -77,28 +74,27 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
   const handleInscreverEquipe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedHackathonId) {
-      setStatusMsg({ type: 'error', text: 'Selecione um Hackathon ativo no topo da tela.' });
+      toast.error('Selecione um Hackathon ativo no topo da tela.');
       return;
     }
     if (selectedParticipantes.length === 0) {
-      setStatusMsg({ type: 'error', text: 'Selecione ao menos 1 participante para compor a equipe.' });
+      toast.error('Selecione ao menos 1 participante para compor a equipe.');
       return;
     }
 
     setLoading(true);
-    setStatusMsg(null);
     try {
       const nova = await api.inscreverEquipe({
         hackathonId: selectedHackathonId,
         nome: nomeEquipe,
         participanteIds: selectedParticipantes
       });
-      setStatusMsg({ type: 'success', text: `Equipe "${nova.nome}" inscrita com sucesso no evento!` });
+      toast.success(`Equipe "${nova.nome}" inscrita com sucesso no evento!`);
       setNomeEquipe('');
       setSelectedParticipantes([]);
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao inscrever equipe');
     } finally {
       setLoading(false);
     }
@@ -107,12 +103,11 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
   const handleRegistrarProjeto = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedEquipeId) {
-      setStatusMsg({ type: 'error', text: 'Selecione a equipe responsável pelo projeto.' });
+      toast.error('Selecione a equipe responsável pelo projeto.');
       return;
     }
 
     setLoading(true);
-    setStatusMsg(null);
     try {
       const novo = await api.registrarProjeto({
         equipeId: Number(selectedEquipeId),
@@ -120,12 +115,12 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
         descricao: descricaoProjeto,
         areaTematica
       });
-      setStatusMsg({ type: 'success', text: `Projeto "${novo.titulo}" registrado com sucesso!` });
+      toast.success(`Projeto "${novo.titulo}" registrado com sucesso!`);
       setTituloProjeto('');
       setDescricaoProjeto('');
       onRefresh();
     } catch (err: any) {
-      setStatusMsg({ type: 'error', text: err.message });
+      toast.error(err.message || 'Erro ao registrar projeto');
     } finally {
       setLoading(false);
     }
@@ -153,7 +148,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
         {/* Abas de Navegação */}
         <div className="flex space-x-2 mt-4 border-b border-slate-800">
           <button
-            onClick={() => { setActiveTab('participante'); setStatusMsg(null); }}
+            onClick={() => setActiveTab('participante')}
             className={`pb-2.5 px-3 text-xs font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
               activeTab === 'participante'
                 ? 'border-amber-400 text-amber-400 font-bold'
@@ -163,7 +158,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
             <UserPlus className="w-4 h-4" /> 1. Cadastrar Estudante (ECU 002)
           </button>
           <button
-            onClick={() => { setActiveTab('equipe'); setStatusMsg(null); }}
+            onClick={() => setActiveTab('equipe')}
             className={`pb-2.5 px-3 text-xs font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
               activeTab === 'equipe'
                 ? 'border-amber-400 text-amber-400 font-bold'
@@ -173,7 +168,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
             <Users className="w-4 h-4" /> 2. Inscrever Equipe (ECU 003)
           </button>
           <button
-            onClick={() => { setActiveTab('projeto'); setStatusMsg(null); }}
+            onClick={() => setActiveTab('projeto')}
             className={`pb-2.5 px-3 text-xs font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
               activeTab === 'projeto'
                 ? 'border-amber-400 text-amber-400 font-bold'
@@ -184,15 +179,6 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
           </button>
         </div>
       </div>
-
-      {statusMsg && (
-        <div className={`p-4 rounded-xl text-xs flex items-center gap-2 border ${
-          statusMsg.type === 'success' ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' : 'bg-rose-950/50 border-rose-500/40 text-rose-300'
-        }`}>
-          {statusMsg.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-          <span>{statusMsg.text}</span>
-        </div>
-      )}
 
       {/* Conteúdo da Aba 1: Cadastrar Participante (ECU 002) */}
       {activeTab === 'participante' && (
