@@ -55,11 +55,12 @@ export const RegistrarAvaliacaoSchema = z.object({
   dataHora: z.string().optional()
 });
 
-export type CriarHackathonInput = z.infer<typeof CriarHackathonSchema>;
-export type CadastrarParticipanteInput = z.infer<typeof CadastrarParticipanteSchema>;
-export type InscreverEquipeInput = z.infer<typeof InscreverEquipeSchema>;
-export type RegistrarProjetoInput = z.infer<typeof RegistrarProjetoSchema>;
-export type CadastrarMentorInput = z.infer<typeof CadastrarMentorSchema>;
-export type RegistrarMentoriaInput = z.infer<typeof RegistrarMentoriaSchema>;
-export type CadastrarJuradoInput = z.infer<typeof CadastrarJuradoSchema>;
-export type RegistrarAvaliacaoInput = z.infer<typeof RegistrarAvaliacaoSchema>;
+export type CriarHackathonInput = z.input<typeof CriarHackathonSchema>;
+export type CadastrarParticipanteInput = z.input<typeof CadastrarParticipanteSchema>;
+export type InscreverEquipeInput = z.input<typeof InscreverEquipeSchema>;
+export type RegistrarProjetoInput = z.input<typeof RegistrarProjetoSchema>;
+export type CadastrarMentorInput = z.input<typeof CadastrarMentorSchema>;
+export type RegistrarMentoriaInput = z.input<typeof RegistrarMentoriaSchema>;
+export type CadastrarJuradoInput = z.input<typeof CadastrarJuradoSchema>;
+export type RegistrarAvaliacaoInput = z.input<typeof RegistrarAvaliacaoSchema>;
+

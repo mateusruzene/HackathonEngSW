@@ -16,17 +16,17 @@ async function test(name: string, fn: () => Promise<void>) {
   total++;
   try {
     await fn();
-    console.log(`  ✅ [PASS] ${name}`);
+    console.log(`[PASS] ${name}`);
     passed++;
   } catch (err: any) {
-    console.error(`  ❌ [FAIL] ${name}`);
-    console.error(`     Error: ${err.message}`);
+    console.error(`[FAIL] ${name}`);
+    console.error(`Error: ${err.message}`);
   }
 }
 
 async function runTests() {
   console.log('\n======================================================');
-  console.log('🧪 Executando Suíte de Testes Automatizados (TypeScript)');
+  console.log('Executando Suíte de Testes Automatizados (TypeScript)');
   console.log('======================================================\n');
 
   // Limpar tabelas e inicializar banco
@@ -350,14 +350,14 @@ async function runTests() {
   });
 
   console.log('\n======================================================');
-  console.log(`📊 Resultado Final dos Testes: ${passed}/${total} Aprovados (${Math.round((passed/total)*100)}%)`);
+  console.log(`Resultado Final dos Testes: ${passed}/${total} Aprovados (${Math.round((passed/total)*100)}%)`);
   console.log('======================================================\n');
 
   if (passed === total) {
-    console.log(`🎉 Todos os ${total} testes foram aprovados com sucesso!\n`);
+    console.log(`Todos os ${total} testes foram aprovados com sucesso!\n`);
     process.exit(0);
   } else {
-    console.error('❌ Alguns testes falharam.');
+    console.error('Alguns testes falharam.');
     process.exit(1);
   }
 }
