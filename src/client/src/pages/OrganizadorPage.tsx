@@ -29,6 +29,10 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (new Date(dataTermino) < new Date(dataInicio)) {
+      toast.error('A data de término não pode ser anterior à data de início.');
+      return;
+    }
     setLoading(true);
     try {
       const novo = await api.criarHackathon({

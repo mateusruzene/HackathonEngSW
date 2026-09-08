@@ -4,9 +4,21 @@ export const CriarHackathonSchema = z.object({
   nome: z.string().min(3, 'O nome do Hackathon deve ter no mínimo 3 caracteres'),
   dataInicio: z.string().min(1, 'Data de início é obrigatória'),
   dataTermino: z.string().min(1, 'Data de término é obrigatória'),
-  maxEquipes: z.number().int().positive().default(10),
+  maxEquipes: z.number().int().positive('O número máximo de equipes deve ser pelo menos 1').default(10),
   descricao: z.string().optional().default('')
-});
+}).refine(
+  (dados) => {
+    if (!dados.dataInicio || !dados.dataTermino) return true;
+    const inicio = new Date(dados.dataInicio);
+    const termino = new Date(dados.dataTermino);
+    if (isNaN(inicio.getTime()) || isNaN(termino.getTime())) return true;
+    return termino >= inicio;
+  },
+  {
+    message: 'A data de término não pode ser anterior à data de início',
+    path: ['dataTermino']
+  }
+);
 
 export const CadastrarParticipanteSchema = z.object({
   nome: z.string().min(2, 'Nome é obrigatório'),

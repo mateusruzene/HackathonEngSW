@@ -1,4 +1,5 @@
 import { equipeRepository } from '../repositories/equipeRepository.js';
+import { projetoRepository } from '../repositories/projetoRepository.js';
 import { avaliacaoRepository } from '../repositories/avaliacaoRepository.js';
 import { hackathonRepository } from '../repositories/hackathonRepository.js';
 import { Projeto, ItemClassificacao } from '../domain/entities.js';
@@ -15,9 +16,11 @@ export class ClassificacaoController {
     const itens: any[] = [];
 
     for (const eq of equipes) {
-      if (eq.projeto) {
-        const projEntity = new Projeto(eq.projeto);
-        const avaliacoes = await avaliacaoRepository.listarPorProjeto(eq.projeto.id);
+      // Busca o projeto oficial registrado pela equipe (ECU 004 / SD 007)
+      const projeto = await projetoRepository.buscarPorEquipeId(eq.id) || eq.projeto;
+      if (projeto) {
+        const projEntity = new Projeto(projeto);
+        const avaliacoes = await avaliacaoRepository.listarPorProjeto(projeto.id);
 
         // Aplicação do padrão GRASP Information Expert: a entidade Projeto calcula sua média
         const notaMedia = projEntity.calcularNotaMedia(avaliacoes);
@@ -26,10 +29,10 @@ export class ClassificacaoController {
           equipeId: eq.id,
           nomeEquipe: eq.nome,
           membros: eq.membros,
-          projetoId: eq.projeto.id,
-          projetoTitulo: eq.projeto.titulo,
-          areaTematica: eq.projeto.areaTematica,
-          descricaoProjeto: eq.projeto.descricao,
+          projetoId: projeto.id,
+          projetoTitulo: projeto.titulo,
+          areaTematica: projeto.areaTematica,
+          descricaoProjeto: projeto.descricao,
           notaMedia,
           totalAvaliacoes: avaliacoes.length,
           avaliacoes

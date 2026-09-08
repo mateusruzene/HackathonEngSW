@@ -134,10 +134,10 @@ export const classesDoSistema: ClassDefinition[] = [
   {
     className: 'ClassificacaoController',
     camada: 'Application Controller',
-    attributes: ['equipeRepo', 'avaliacaoRepo'],
+    attributes: ['equipeRepo', 'projetoRepo', 'avaliacaoRepo'],
     methods: [
-      { name: 'determinarClassificacao', accessedAttributes: ['equipeRepo', 'avaliacaoRepo'] },
-      { name: 'obterEstatisticas', accessedAttributes: ['equipeRepo', 'avaliacaoRepo'] }
+      { name: 'determinarClassificacao', accessedAttributes: ['equipeRepo', 'projetoRepo', 'avaliacaoRepo'] },
+      { name: 'obterEstatisticas', accessedAttributes: ['equipeRepo', 'projetoRepo', 'avaliacaoRepo'] }
     ]
   }
 ];

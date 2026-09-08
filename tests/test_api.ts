@@ -68,6 +68,23 @@ async function runTests() {
     hId = h.id;
   });
 
+  // 1.1 ECU 001 - Validar restrição de data de término anterior à data de início
+  await test('ECU 001: Deve rejeitar criação de Hackathon com data de término anterior à data de início', async () => {
+    let errorOccurred = false;
+    try {
+      await hackathonController.criarHackathon({
+        nome: 'Hackathon Data Invalida',
+        dataInicio: '2026-09-10',
+        dataTermino: '2026-09-01',
+        maxEquipes: 5
+      });
+    } catch (err: any) {
+      errorOccurred = true;
+      assert.match(err.message, /data de término/i);
+    }
+    assert.strictEqual(errorOccurred, true);
+  });
+
   // 2. ECU 002 - Cadastrar Participantes
   await test('ECU 002: Deve cadastrar participantes válidos', async () => {
     const p1 = await participanteController.cadastrarParticipante({
@@ -317,12 +334,16 @@ async function runTests() {
     assert.strictEqual(ranking[0].nomeEquipe, 'Equipe Alfa');
     assert.strictEqual(ranking[0].notaMedia, 9.25);
     assert.strictEqual(ranking[0].totalAvaliacoes, 2);
+    assert.strictEqual(ranking[0].projetoTitulo, 'Sistema de IA Médica');
+    assert.strictEqual(ranking[0].areaTematica, 'Saúde e IA');
 
     // 2º Lugar: Equipe Beta -> Média 8.0
     assert.strictEqual(ranking[1].posicao, 2);
     assert.strictEqual(ranking[1].nomeEquipe, 'Equipe Beta');
     assert.strictEqual(ranking[1].notaMedia, 8.0);
     assert.strictEqual(ranking[1].totalAvaliacoes, 1);
+    assert.strictEqual(ranking[1].projetoTitulo, 'App de Sustentabilidade');
+    assert.strictEqual(ranking[1].areaTematica, 'Sustentabilidade');
   });
 
   // 15. Dashboard consolidado

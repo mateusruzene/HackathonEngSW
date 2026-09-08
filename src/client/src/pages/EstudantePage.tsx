@@ -32,7 +32,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
   const [selectedEquipeId, setSelectedEquipeId] = useState<string>('');
   const [tituloProjeto, setTituloProjeto] = useState('');
   const [descricaoProjeto, setDescricaoProjeto] = useState('');
-  const [areaTematica, setAreaTematica] = useState('Inteligência Artificial');
+  const [areaTematica, setAreaTematica] = useState('Sustentabilidade e IoT');
 
   const loadParticipantes = async () => {
     try {
@@ -112,6 +112,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
       toast.success(`Projeto "${novo.titulo}" registrado com sucesso!`);
       setTituloProjeto('');
       setDescricaoProjeto('');
+      setAreaTematica('Sustentabilidade e IoT');
       onRefresh();
     } catch (err: any) {
       toast.error(err.message || 'Erro ao registrar projeto');

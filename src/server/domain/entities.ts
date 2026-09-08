@@ -37,6 +37,10 @@ export class Hackathon {
     this.dataTermino = parse.data.dataTermino;
     this.maxEquipes = parse.data.maxEquipes;
     this.descricao = parse.data.descricao;
+
+    if (new Date(this.dataTermino) < new Date(this.dataInicio)) {
+      throw new ValidacaoError('A data de término não pode ser anterior à data de início');
+    }
   }
 
   podeReceberEquipe(totalEquipesAtual: number): boolean {
