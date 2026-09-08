@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { 
-  Compass, 
-  UserPlus, 
-  MessageSquare, 
-  FolderKanban
-} from 'lucide-react';
 import { Mentor, Mentoria } from '../types';
 import { api } from '../api';
 
@@ -102,8 +96,7 @@ export const MentorPage: React.FC<MentorPageProps> = ({
       
       {/* Header */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center space-x-2">
-          <Compass className="w-5 h-5 text-blue-700" />
+        <div>
           <h1 className="text-xl font-bold text-slate-900">Portal de Mentorias (ECU 005)</h1>
         </div>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -115,8 +108,8 @@ export const MentorPage: React.FC<MentorPageProps> = ({
         
         {/* Form 1: Cadastrar Mentor */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-            <UserPlus className="w-4 h-4 text-blue-700" /> Cadastrar Mentor
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Cadastrar Mentor
           </h2>
 
           <form onSubmit={handleCadastrarMentor} className="space-y-3.5">
@@ -168,8 +161,8 @@ export const MentorPage: React.FC<MentorPageProps> = ({
 
         {/* Form 2: Registrar Mentoria (ECU 005) */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-            <MessageSquare className="w-4 h-4 text-blue-700" /> Registrar Mentoria à Equipe (ECU 005)
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Registrar Mentoria à Equipe (ECU 005)
           </h2>
 
           <form onSubmit={handleRegistrarMentoria} className="space-y-3.5">
@@ -233,8 +226,8 @@ export const MentorPage: React.FC<MentorPageProps> = ({
 
       {/* Histórico de Mentorias */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-          <FolderKanban className="w-4 h-4 text-blue-700" /> Mentorias Realizadas no Hackathon ({mentorias.length})
+        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+          Mentorias Realizadas no Hackathon ({mentorias.length})
         </h2>
 
         {mentorias.length > 0 ? (
@@ -243,12 +236,12 @@ export const MentorPage: React.FC<MentorPageProps> = ({
               <div key={m.id} className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-xs text-slate-900">{m.mentorNome}</span>
-                  <span className="text-[11px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-medium">
+                  <span className="text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-medium">
                     Equipe: {m.equipeNome}
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 italic">"{m.comentarios}"</p>
-                <p className="text-[10px] text-slate-400">{new Date(m.dataHora).toLocaleString('pt-BR')}</p>
+                <p className="text-xs text-slate-400">{new Date(m.dataHora).toLocaleString('pt-BR')}</p>
               </div>
             ))}
           </div>

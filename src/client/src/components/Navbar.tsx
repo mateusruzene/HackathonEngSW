@@ -1,12 +1,11 @@
 import React from 'react';
-import { 
-  Trophy, 
-  Users, 
-  GraduationCap, 
-  Compass, 
-  Gavel, 
-  Sparkles, 
-  Calendar 
+import {
+  Trophy,
+  Users,
+  GraduationCap,
+  Compass,
+  Gavel,
+  Calendar
 } from 'lucide-react';
 import { Hackathon } from '../types';
 
@@ -41,23 +40,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          
+
           {/* Logo & UFPR Badge */}
-          <div 
-            onClick={() => setRoute('ranking')} 
+          <div
+            onClick={() => setRoute('ranking')}
             className="flex items-center space-x-3 cursor-pointer select-none"
           >
-            <div className="w-9 h-9 rounded-lg bg-blue-900 flex items-center justify-center text-white">
-              <Trophy className="w-5 h-5 text-amber-400" />
-            </div>
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-bold text-base text-slate-900 tracking-tight">HackDInf</span>
-                <span className="text-[10px] font-bold tracking-wider bg-slate-100 text-slate-700 border border-slate-300 px-1.5 py-0.5 rounded">
-                  UFPR
-                </span>
               </div>
-              <p className="text-[11px] text-slate-500">Engenharia de Software 2026/1</p>
+              <p className="text-xs text-slate-500">Engenharia de Software 2026/1</p>
             </div>
           </div>
 
@@ -70,11 +63,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => setRoute(item.id)}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                    isActive
-                      ? 'bg-slate-100 text-slate-900 font-semibold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
-                  }`}
+                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${isActive
+                    ? 'bg-slate-100 text-slate-900 font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
+                    }`}
                 >
                   <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-blue-700' : 'text-slate-500'}`} />
                   <span>{item.label}</span>
@@ -108,8 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               title="Carrega dados de demonstração da UFPR"
               className="flex items-center space-x-1.5 bg-blue-700 hover:bg-blue-800 text-white font-medium px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>{loadingDemo ? 'Carregando...' : 'Demo UFPR'}</span>
+              <span>{loadingDemo ? 'Carregando...' : 'Demo'}</span>
             </button>
           </div>
 
@@ -124,11 +115,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => setRoute(item.id)}
-                className={`flex items-center space-x-1 px-2.5 py-1 rounded-md text-[11px] whitespace-nowrap ${
-                  isActive
-                    ? 'bg-slate-100 text-slate-900 font-semibold'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
+                className={`flex items-center space-x-1 px-2.5 py-1 rounded-md text-xs whitespace-nowrap ${isActive
+                  ? 'bg-slate-100 text-slate-900 font-semibold'
+                  : 'text-slate-600 hover:text-slate-900'
+                  }`}
               >
                 <Icon className="w-3 h-3" />
                 <span>{item.label}</span>
