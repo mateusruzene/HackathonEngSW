@@ -93,10 +93,10 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-      
+
       {/* Toast Notifications Container */}
-      <Toaster 
-        position="top-right" 
+      <Toaster
+        position="top-right"
         toastOptions={{
           duration: 4000,
           style: {
@@ -179,17 +179,6 @@ export const App: React.FC = () => {
           />
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-        <p>
-          Departamento de Informática — Universidade Federal do Paraná (UFPR) • Engenharia de Software 2026/1
-        </p>
-        <p className="mt-1 text-slate-400">
-          Autores: <span className="font-semibold text-slate-600">Mateus Siqueira Ruzene</span> (GRR20221223) e <span className="font-semibold text-slate-600">Gabriel Claudino de Souza</span> (GRR20215730)
-        </p>
-      </footer>
-
     </div>
   );
 };

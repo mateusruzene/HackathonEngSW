@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { 
-  PlusCircle, 
-  Users, 
-  Layers, 
-  Sparkles
-} from 'lucide-react';
 import { Hackathon, DashboardData } from '../types';
 import { api } from '../api';
 
@@ -70,10 +64,9 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
 
         <button
           onClick={onCarregarDemo}
-          className="flex items-center space-x-1.5 bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer w-fit"
+          className="bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer w-fit"
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Carregar Demonstração UFPR</span>
+          <span>Demonstração UFPR</span>
         </button>
       </div>
 
@@ -81,8 +74,8 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
         
         {/* Formulário de Criação (ECU 001) */}
         <div className="lg:col-span-1 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-            <PlusCircle className="w-4 h-4 text-blue-700" /> Cadastrar Novo Hackathon
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Cadastrar Novo Hackathon
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-3.5">
@@ -133,7 +126,7 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
                 onChange={(e) => setMaxEquipes(parseInt(e.target.value, 10))}
                 className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
-              <span className="text-[11px] text-slate-500 mt-0.5 block">
+              <span className="text-xs text-slate-500 mt-0.5 block">
                 Controla o limite estrito de vagas do evento.
               </span>
             </div>
@@ -163,8 +156,8 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-blue-700" /> Detalhes do Evento
+              <h2 className="text-sm font-bold text-slate-900">
+                Detalhes do Evento
               </h2>
               {dashboard?.hackathon && (
                 <span className="text-xs font-mono text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
@@ -182,15 +175,15 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Início</span>
+                    <span className="text-xs uppercase font-medium text-slate-500 block">Início</span>
                     <span className="text-xs font-semibold text-slate-800">{dashboard.hackathon.dataInicio}</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Término</span>
+                    <span className="text-xs uppercase font-medium text-slate-500 block">Término</span>
                     <span className="text-xs font-semibold text-slate-800">{dashboard.hackathon.dataTermino}</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Ocupação</span>
+                    <span className="text-xs uppercase font-medium text-slate-500 block">Ocupação</span>
                     <span className={`text-xs font-bold ${
                       dashboard.estatisticas.vagasRestantes === 0 ? 'text-rose-600' : 'text-emerald-700'
                     }`}>
@@ -201,8 +194,8 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
 
                 {/* Lista de Equipes Inscritas */}
                 <div className="pt-1">
-                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-blue-700" /> Equipes Inscritas ({dashboard.equipes.length})
+                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">
+                    Equipes Inscritas ({dashboard.equipes.length})
                   </h4>
                   {dashboard.equipes.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -210,17 +203,17 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
                         <div key={eq.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
                           <div className="flex items-center justify-between">
                             <span className="font-semibold text-xs text-slate-900">{eq.nome}</span>
-                            <span className="text-[10px] text-slate-500">{eq.membros.length} membros</span>
+                            <span className="text-xs text-slate-500">{eq.membros.length} membros</span>
                           </div>
-                          <p className="text-[11px] text-slate-600">
+                          <p className="text-xs text-slate-600">
                             {eq.membros.map(m => m.nome).join(', ')}
                           </p>
                           {eq.projeto ? (
-                            <p className="text-[11px] text-blue-700 font-medium">
+                            <p className="text-xs text-blue-700 font-medium">
                               Projeto: {eq.projeto.titulo}
                             </p>
                           ) : (
-                            <p className="text-[10px] text-slate-400 italic">Projeto não submetido</p>
+                            <p className="text-xs text-slate-400 italic">Projeto não submetido</p>
                           )}
                         </div>
                       ))}

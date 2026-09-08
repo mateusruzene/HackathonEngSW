@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { 
-  GraduationCap, 
-  UserPlus, 
-  Users, 
-  FolderKanban
-} from 'lucide-react';
 import { Participante, DashboardData } from '../types';
 import { api } from '../api';
 
@@ -137,8 +131,7 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
       
       {/* Header */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center space-x-2">
-          <GraduationCap className="w-5 h-5 text-blue-700" />
+        <div>
           <h1 className="text-xl font-bold text-slate-900">Portal do Estudante / Participante</h1>
         </div>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -149,33 +142,33 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
         <div className="flex space-x-2 mt-4 border-b border-slate-200">
           <button
             onClick={() => setActiveTab('participante')}
-            className={`pb-2.5 px-3 text-xs flex items-center gap-1.5 transition-colors border-b-2 cursor-pointer ${
+            className={`pb-2.5 px-3 text-xs transition-colors border-b-2 cursor-pointer ${
               activeTab === 'participante'
                 ? 'border-blue-700 text-blue-700 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
-            <UserPlus className="w-3.5 h-3.5" /> 1. Cadastrar Estudante (ECU 002)
+            1. Cadastrar Estudante (ECU 002)
           </button>
           <button
             onClick={() => setActiveTab('equipe')}
-            className={`pb-2.5 px-3 text-xs flex items-center gap-1.5 transition-colors border-b-2 cursor-pointer ${
+            className={`pb-2.5 px-3 text-xs transition-colors border-b-2 cursor-pointer ${
               activeTab === 'equipe'
                 ? 'border-blue-700 text-blue-700 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
-            <Users className="w-3.5 h-3.5" /> 2. Inscrever Equipe (ECU 003)
+            2. Inscrever Equipe (ECU 003)
           </button>
           <button
             onClick={() => setActiveTab('projeto')}
-            className={`pb-2.5 px-3 text-xs flex items-center gap-1.5 transition-colors border-b-2 cursor-pointer ${
+            className={`pb-2.5 px-3 text-xs transition-colors border-b-2 cursor-pointer ${
               activeTab === 'projeto'
                 ? 'border-blue-700 text-blue-700 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
-            <FolderKanban className="w-3.5 h-3.5" /> 3. Submeter Projeto (ECU 004)
+            3. Submeter Projeto (ECU 004)
           </button>
         </div>
       </div>
@@ -184,8 +177,8 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
       {activeTab === 'participante' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-              <UserPlus className="w-4 h-4 text-blue-700" /> Novo Participante
+            <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+              Novo Participante
             </h2>
 
             <form onSubmit={handleCadastrarParticipante} className="space-y-3.5">
@@ -259,12 +252,12 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
                   <div key={p.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-xs text-slate-900">{p.nome}</span>
-                      <span className="text-[10px] font-mono bg-white text-slate-700 px-1.5 py-0.5 rounded border border-slate-200 font-medium">
+                      <span className="text-xs font-mono bg-white text-slate-700 px-1.5 py-0.5 rounded border border-slate-200 font-medium">
                         {p.grr}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600">{p.email}</p>
-                    <p className="text-[10px] text-slate-500">{p.curso}</p>
+                    <p className="text-xs text-slate-600">{p.email}</p>
+                    <p className="text-xs text-slate-500">{p.curso}</p>
                   </div>
                 ))}
               </div>
@@ -279,8 +272,8 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
       {activeTab === 'equipe' && (
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
           <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <Users className="w-4 h-4 text-blue-700" /> Inscrição de Equipe no Hackathon
+            <h2 className="text-sm font-bold text-slate-900">
+              Inscrição de Equipe no Hackathon
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Selecione os estudantes para compor a equipe. Cada estudante só pode integrar uma equipe por evento.
@@ -321,9 +314,9 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
                       >
                         <div className="flex items-center justify-between font-semibold">
                           <span>{p.nome}</span>
-                          <span className="text-[10px] font-mono text-slate-500">{p.grr}</span>
+                          <span className="text-xs font-mono text-slate-500">{p.grr}</span>
                         </div>
-                        <p className="text-[11px] text-slate-500 mt-0.5">{p.curso}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">{p.curso}</p>
                       </div>
                     );
                   })}
@@ -348,8 +341,8 @@ export const EstudantePage: React.FC<EstudantePageProps> = ({
       {activeTab === 'projeto' && (
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
           <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <FolderKanban className="w-4 h-4 text-blue-700" /> Registro do Projeto da Equipe
+            <h2 className="text-sm font-bold text-slate-900">
+              Registro do Projeto da Equipe
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Cada equipe pode cadastrar estritamente 1 projeto para ser avaliado pela banca examinadora.

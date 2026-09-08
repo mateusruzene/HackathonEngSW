@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import {
-  Gavel,
-  UserPlus,
-  Star,
-  FolderKanban
-} from 'lucide-react';
 import { Jurado, Projeto, Avaliacao } from '../types';
 import { api } from '../api';
 
@@ -109,8 +103,7 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
 
       {/* Header */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center space-x-2">
-          <Gavel className="w-5 h-5 text-blue-700" />
+        <div>
           <h1 className="text-xl font-bold text-slate-900">Banca Examinadora / Jurados (ECU 006)</h1>
         </div>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -122,8 +115,8 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
 
         {/* Form 1: Cadastrar Jurado */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-            <UserPlus className="w-4 h-4 text-blue-700" /> Cadastrar Jurado / Examinador
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Cadastrar Jurado / Examinador
           </h2>
 
           <form onSubmit={handleCadastrarJurado} className="space-y-3.5">
@@ -175,8 +168,8 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
 
         {/* Form 2: Registrar Avaliação (ECU 006) */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-            <Star className="w-4 h-4 text-blue-700" /> Registrar Avaliação do Projeto (ECU 006)
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Registrar Avaliação do Projeto (ECU 006)
           </h2>
 
           <form onSubmit={handleRegistrarAvaliacao} className="space-y-3.5">
@@ -258,8 +251,8 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
 
       {/* Histórico de Avaliações */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-          <FolderKanban className="w-4 h-4 text-blue-700" /> Avaliações Lançadas no Hackathon ({avaliacoes.length})
+        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+          Avaliações Lançadas no Hackathon ({avaliacoes.length})
         </h2>
 
         {avaliacoes.length > 0 ? (
@@ -269,10 +262,10 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-xs text-slate-900">{av.juradoNome}</span>
                   <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                    ★ {Number(av.nota).toFixed(1)}
+                    Nota {Number(av.nota).toFixed(1)}
                   </span>
                 </div>
-                <p className="text-[11px] text-blue-800 font-medium">{av.projetoTitulo} ({av.equipeNome})</p>
+                <p className="text-xs text-blue-800 font-medium">{av.projetoTitulo} ({av.equipeNome})</p>
                 <p className="text-xs text-slate-600 italic">"{av.comentarios || 'Sem comentários adicionais.'}"</p>
               </div>
             ))}
