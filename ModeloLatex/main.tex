@@ -284,7 +284,7 @@ Os Diagramas de Sequência de Sistema (DSS) descrevem o comportamento de caixa-p
 \label{fig:dss007}
 \end{figure}
 
-\section{Contratos de Operação (Padrão Craig Larman)}
+\section{Contratos de Operação}
 
 Para cada operação de sistema identificada nos DSS, elaboramos os Contratos de Operação formais especificando rigorosamente as pré-condições e as transformações de estado nas pós-condições.
 
@@ -544,7 +544,7 @@ Implementamos um script de análise estática automatizada (\texttt{scripts/calc
 
 A arquitetura do software foi concebida respeitando rigorosamente as boas práticas de engenharia de software e os princípios SOLID consolidados por Robert C. Martin \cite{martin2002}. A seguir, justificamos o atendimento comprovado no código-fonte para todos os cinco princípios, com ênfase aprofundada nos três primeiros conforme exigido:
 
-\subsection{1. Princípio da Responsabilidade Única (Single Responsibility Principle -- SRP)}
+\subsection{Princípio da Responsabilidade Única (Single Responsibility Principle -- SRP)}
 \textit{"Uma classe deve ter apenas uma única razão para mudar"}.
 \begin{itemize}
     \item \textbf{No Domínio}: A classe \texttt{Projeto} (\texttt{entities.ts}) tem como única responsabilidade manter o estado e as regras de negócio de um projeto acadêmico e calcular sua própria média (\textit{Information Expert}). Ela não possui conhecimento sobre banco de dados, HTTP ou serialização JSON.
@@ -553,7 +553,7 @@ A arquitetura do software foi concebida respeitando rigorosamente as boas práti
     \item \textbf{Na Apresentação}: As rotas Fastify (\texttt{apiRoutes.ts}) cuidam exclusivamente do protocolo HTTP e códigos de status, enquanto as páginas React em \texttt{src/client/src/pages/} dedicam-se puramente à renderização reativa dos componentes de UI.
 \end{itemize}
 
-\subsection{2. Princípio Aberto/Fechado (Open/Closed Principle -- OCP)}
+\subsection{Princípio Aberto/Fechado (Open/Closed Principle -- OCP)}
 \textit{"Entidades de software devem ser abertas para extensão, mas fechadas para modificação"}.
 \begin{itemize}
     \item \textbf{Hierarquia Extensível de Exceções de Domínio}: No arquivo \texttt{src/server/domain/errors.ts}, estruturamos a classe base abstrata \texttt{DomainError}. Novas regras de negócio e restrições (ex: \texttt{HackathonLotadoError}, \texttt{ParticipanteJaInscritoError}, \texttt{NotaInvalidaError}) são adicionadas estendendo essa classe base com seus respectivos códigos HTTP e mensagens semânticas.
@@ -561,20 +561,20 @@ A arquitetura do software foi concebida respeitando rigorosamente as boas práti
     \item \textbf{Composição de Esquemas Zod}: Novos esquemas de entrada estendem regras preexistentes (\texttt{.refine()}, \texttt{.safeParse()}) sem demandar refatoração nas entidades persistidas.
 \end{itemize}
 
-\subsection{3. Princípio da Substituição de Liskov (Liskov Substitution Principle -- LSP)}
+\subsection{Princípio da Substituição de Liskov (Liskov Substitution Principle -- LSP)}
 \textit{"Subclasses devem ser substituíveis por suas superclasses sem afetar a correção do sistema"}.
 \begin{itemize}
     \item \textbf{Intercambialidade de Erros de Domínio}: Qualquer especialização de erro de negócio (\texttt{HackathonLotadoError}, \texttt{RecursoNaoEncontradoError}) substitui perfeitamente \texttt{DomainError} em qualquer ponto da pilha de execução. Ambas satisfazem o contrato de propriedades \texttt{statusCode} e \texttt{message}, garantindo que consumidores de alto nível não necessitem de bifurcações condicionais com checagem de tipos concretos para manter a integridade da resposta HTTP.
 \end{itemize}
 
-\subsection{4. Princípio da Segregação de Interfaces (Interface Segregation Principle -- ISP)}
+\subsection{Princípio da Segregação de Interfaces (Interface Segregation Principle -- ISP)}
 \textit{"Clientes não devem ser forçados a depender de interfaces que não utilizam"}.
 \begin{itemize}
     \item \textbf{DTOs Granulares e Especializados}: Em vez de um objeto monolítico de transferência de dados, definimos contratos estritamente segregados em \texttt{schemas.ts}: \texttt{CriarHackathonInput}, \texttt{CadastrarParticipanteInput}, \texttt{InscreverEquipeInput}, \texttt{RegistrarProjetoInput} e \texttt{RegistrarAvaliacaoInput}.
     \item \textbf{Interfaces Especializadas por Papel de Ator}: O frontend consome apenas os contratos DTO estritamente necessários para o respectivo formulário do ator em foco (\texttt{/organizador}, \texttt{/estudante}, \texttt{/mentor}, \texttt{/jurado}), evitando o acoplamento a propriedades desnecessárias.
 \end{itemize}
 
-\subsection{5. Princípio da Inversão de Dependência (Dependency Inversion Principle -- DIP)}
+\subsection{Princípio da Inversão de Dependência (Dependency Inversion Principle -- DIP)}
 \textit{"Módulos de alto nível não devem depender de módulos de baixo nível; ambos devem depender de abstrações"}.
 \begin{itemize}
     \item \textbf{Desacoplamento entre Aplicação e Persistência}: Os controladores interagem com repositórios que expõem contratos de operações (\texttt{buscarPorId}, \texttt{criar}, \texttt{listar}), abstraindo os detalhes de baixo nível do dialeto SQL e das tabelas relacionais do SQLite. Isso permite substituir o mecanismo de persistência por adaptadores em memória ou mocks durante a execução de testes automatizados sem tocar na lógica de aplicação.
@@ -582,7 +582,7 @@ A arquitetura do software foi concebida respeitando rigorosamente as boas práti
 
 \section{Conclusão}
 
-O projeto e a implementação desenvolvidos atendem com precisão rigorosa a todos os requisitos do edital do Primeiro Trabalho Prático de Engenharia de Software da UFPR. A transição da especificação de requisitos para a modelagem orientada a objetos (Casos de Uso, Modelo de Domínio, DSS, Contratos e GRASP) resultou em uma arquitetura limpa, extensível e desacoplada, perfeitamente refletida no código-fonte em Node.js/SQLite e na interface web React.
+O projeto e a implementação desenvolvidos atendem aos requisitos propostos. A transição da especificação de requisitos para a modelagem orientada a objetos (Casos de Uso, Modelo de Domínio, DSS, Contratos e GRASP) resultou em uma arquitetura limpa, extensível e desacoplada, perfeitamente refletida no código-fonte em Node.js/SQLite e na interface web React.
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}

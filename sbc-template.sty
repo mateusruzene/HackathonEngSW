@@ -102,22 +102,21 @@
 % sections
 \renewcommand\section{\@startsection{section}{1}{\z@}%
                        {-6\p@ \@plus -4\p@ \@minus -4\p@}%
-                       {0\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {4\p@ \@plus 2\p@ \@minus 2\p@}%
                        {\normalfont\XIIIPT\bfseries\boldmath
                         \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
 
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                        {-6\p@ \@plus -4\p@ \@minus -4\p@}%
-                       {0\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {4\p@ \@plus 2\p@ \@minus 2\p@}%
                        {\normalfont\normalsize\bfseries\boldmath
                         \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
 
-%\renewcommand{\thesection}{\arabic{section}.}
-%\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
-%\renewcommand{\thesubsubsection}{\thesubsection\arabic{subsubsection}.}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\def\@seccntformat#1{\csname the#1\endcsname.\hspace{1ex}}
 
-\RequirePackage{titlesec}
-\titlelabel{\thetitle.\hspace{1ex}}
 
 % first page
 

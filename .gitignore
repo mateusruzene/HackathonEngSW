@@ -14,3 +14,9 @@ pnpm-debug.log*
 dist/
 build/
 .DS_Store
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc

@@ -29,7 +29,7 @@ Todos os diagramas foram modelados em código Mermaid (`docs/mermaid/`) e export
 1. **Diagrama de Casos de Uso (UML Use Case)**: Mapeamento dos 4 atores (*Organizador*, *Participante*, *Mentor*, *Jurado*) e dos 8 casos de uso (`uc_diagram.mmd`).
 2. **Modelo Conceitual de Domínio**: Entidades do mundo real e suas associações/multiplicidades (`domain_model.mmd`).
 3. **Diagramas de Sequência de Sistema (DSS)**: 7 diagramas caixa-preta mapeando eventos dos atores para a fronteira do `:Sistema` (`dss_001` a `dss_007`).
-4. **Contratos de Operação (Padrão Craig Larman)**: Pré e pós-condições formais detalhadas no relatório LaTeX.
+4. **Contratos de Operação**: Pré e pós-condições formais detalhadas no relatório LaTeX.
 5. **Diagramas de Interação de Projeto (GRASP)**: Sequência de projeto detalhando a orquestração entre *Controller*, *Information Expert*, *Creator*, *Baixo Acoplamento* e *Alta Coesão*.
 6. **Diagrama de Classes de Projeto (DCD)**: Tipagem estrita, visibilidade, métodos e relacionamentos (`dcd.mmd`).
 7. **Diagrama de Pacotes**: Divisão arquitetural em 4 camadas lógicas (`presentation`, `application`, `domain`, `infrastructure/repositories`).
