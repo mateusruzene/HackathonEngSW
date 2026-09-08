@@ -256,9 +256,9 @@ export class ItemClassificacao {
   }
 
   obterRotuloPosicao(): string {
-    if (this.posicao === 1) return '🥇 1º Lugar (Campeão)';
-    if (this.posicao === 2) return '🥈 2º Lugar (Vice-campeão)';
-    if (this.posicao === 3) return '🥉 3º Lugar';
+    if (this.posicao === 1) return '1º Lugar (Campeão)';
+    if (this.posicao === 2) return '2º Lugar (Vice-campeão)';
+    if (this.posicao === 3) return '3º Lugar';
     return `${this.posicao}º Lugar`;
   }
 

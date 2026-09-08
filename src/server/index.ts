@@ -88,8 +88,8 @@ export async function startServer() {
 
     await fastify.listen({ port, host });
     console.log(`\n======================================================`);
-    console.log(`🚀 Servidor Hackathon DInf/UFPR rodando em: http://localhost:${port}`);
-    console.log(`📚 API REST disponível em: http://localhost:${port}/api`);
+    console.log(`Servidor Hackathon DInf/UFPR rodando em: http://localhost:${port}`);
+    console.log(`API REST disponível em: http://localhost:${port}/api`);
     console.log(`======================================================\n`);
   } catch (err) {
     fastify.log.error(err);
