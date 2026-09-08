@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { 
-  Gavel, 
-  UserPlus, 
-  Star, 
+import {
+  Gavel,
+  UserPlus,
+  Star,
   FolderKanban
 } from 'lucide-react';
 import { Jurado, Projeto, Avaliacao } from '../types';
@@ -105,68 +105,68 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
   };
 
   return (
-    <div className="space-y-8">
-      
+    <div className="space-y-6">
+
       {/* Header */}
-      <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
         <div className="flex items-center space-x-2">
-          <Gavel className="w-6 h-6 text-amber-400" />
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Banca Examinadora / Jurados (ECU 006)</h1>
+          <Gavel className="w-5 h-5 text-blue-700" />
+          <h1 className="text-xl font-bold text-slate-900">Banca Examinadora / Jurados (ECU 006)</h1>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-0.5">
           Cadastro de jurados examinadores e atribuição formal de notas (0.0 a 10.0) e pareceres aos projetos.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
         {/* Form 1: Cadastrar Jurado */}
-        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-          <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-amber-400" /> Cadastrar Jurado / Examinador
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <UserPlus className="w-4 h-4 text-blue-700" /> Cadastrar Jurado / Examinador
           </h2>
 
-          <form onSubmit={handleCadastrarJurado} className="space-y-4">
+          <form onSubmit={handleCadastrarJurado} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Nome do Jurado</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Nome do Jurado</label>
               <input
                 type="text"
                 required
                 value={nomeJurado}
                 onChange={(e) => setNomeJurado(e.target.value)}
                 placeholder="Ex: Prof. Marcos Silva"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">E-mail</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">E-mail</label>
               <input
                 type="email"
                 required
                 value={emailJurado}
                 onChange={(e) => setEmailJurado(e.target.value)}
                 placeholder="Ex: marcos.silva@inf.ufpr.br"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Área de Atuação / Expertise</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Área de Atuação / Expertise</label>
               <input
                 type="text"
                 required
                 value={areaJurado}
                 onChange={(e) => setAreaJurado(e.target.value)}
                 placeholder="Ex: Sistemas Distribuídos e Redes"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Cadastrando...' : 'Cadastrar Jurado'}
             </button>
@@ -174,19 +174,19 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
         </div>
 
         {/* Form 2: Registrar Avaliação (ECU 006) */}
-        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-          <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <Star className="w-5 h-5 text-amber-400" /> Registrar Avaliação do Projeto (ECU 006)
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <Star className="w-4 h-4 text-blue-700" /> Registrar Avaliação do Projeto (ECU 006)
           </h2>
 
-          <form onSubmit={handleRegistrarAvaliacao} className="space-y-4">
+          <form onSubmit={handleRegistrarAvaliacao} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Jurado Avaliador</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Jurado Avaliador</label>
               <select
                 required
                 value={selectedJuradoId}
                 onChange={(e) => setSelectedJuradoId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Selecione o jurado...</option>
                 {jurados.map((j) => (
@@ -198,12 +198,12 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Projeto Avaliado</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Projeto Avaliado</label>
               <select
                 required
                 value={selectedProjetoId}
                 onChange={(e) => setSelectedProjetoId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Selecione o projeto...</option>
                 {projetos.map((p) => (
@@ -215,10 +215,10 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
             </div>
 
             {/* Slider e Input de Nota (0.0 a 10.0) */}
-            <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-slate-300">Nota Atribuída (0.0 a 10.0)</label>
-                <span className="text-lg font-extrabold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/30">
+                <label className="text-xs font-medium text-slate-700">Nota Atribuída (0.0 a 10.0)</label>
+                <span className="text-sm font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                   {Number(nota).toFixed(1)}
                 </span>
               </div>
@@ -229,25 +229,25 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
                 step="0.1"
                 value={nota}
                 onChange={(e) => setNota(parseFloat(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-700"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Parecer Técnico / Comentários</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Parecer Técnico / Comentários</label>
               <textarea
                 rows={3}
                 value={comentarios}
                 onChange={(e) => setComentarios(e.target.value)}
                 placeholder="Insira os pontos fortes, originalidade e recomendações para o projeto..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Enviando...' : 'Lançar Nota e Avaliação'}
             </button>
@@ -257,23 +257,23 @@ export const JuradoPage: React.FC<JuradoPageProps> = ({
       </div>
 
       {/* Histórico de Avaliações */}
-      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-        <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-          <FolderKanban className="w-5 h-5 text-amber-400" /> Avaliações Lançadas no Hackathon ({avaliacoes.length})
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+          <FolderKanban className="w-4 h-4 text-blue-700" /> Avaliações Lançadas no Hackathon ({avaliacoes.length})
         </h2>
 
         {avaliacoes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {avaliacoes.map((av) => (
-              <div key={av.id} className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2">
+              <div key={av.id} className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xs text-white">{av.juradoNome}</span>
-                  <span className="text-xs font-extrabold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">
+                  <span className="font-semibold text-xs text-slate-900">{av.juradoNome}</span>
+                  <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                     ★ {Number(av.nota).toFixed(1)}
                   </span>
                 </div>
-                <p className="text-[11px] text-amber-300 font-semibold">{av.projetoTitulo} ({av.equipeNome})</p>
-                <p className="text-xs text-slate-300 italic">"{av.comentarios || 'Sem comentários adicionais.'}"</p>
+                <p className="text-[11px] text-blue-800 font-medium">{av.projetoTitulo} ({av.equipeNome})</p>
+                <p className="text-xs text-slate-600 italic">"{av.comentarios || 'Sem comentários adicionais.'}"</p>
               </div>
             ))}
           </div>

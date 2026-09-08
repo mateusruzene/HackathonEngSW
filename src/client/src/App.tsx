@@ -92,7 +92,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
       
       {/* Toast Notifications Container */}
       <Toaster 
@@ -100,23 +100,23 @@ export const App: React.FC = () => {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#0f172a',
-            color: '#f8fafc',
-            border: '1px solid #1e293b',
-            borderRadius: '12px',
+            background: '#ffffff',
+            color: '#0f172a',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
             fontSize: '13px',
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)'
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
           },
           success: {
             iconTheme: {
-              primary: '#10b981',
-              secondary: '#0f172a',
+              primary: '#059669',
+              secondary: '#ffffff',
             },
           },
           error: {
             iconTheme: {
-              primary: '#f43f5e',
-              secondary: '#0f172a',
+              primary: '#e11d48',
+              secondary: '#ffffff',
             },
           }
         }}
@@ -181,12 +181,12 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+      <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
         <p>
           Departamento de Informática — Universidade Federal do Paraná (UFPR) • Engenharia de Software 2026/1
         </p>
-        <p className="mt-1 text-slate-600">
-          Autores: <strong>Mateus Siqueira Ruzene</strong> (GRR20221223) e <strong>Gabriel Claudino de Souza</strong> (GRR20215730)
+        <p className="mt-1 text-slate-400">
+          Autores: <span className="font-semibold text-slate-600">Mateus Siqueira Ruzene</span> (GRR20221223) e <span className="font-semibold text-slate-600">Gabriel Claudino de Souza</span> (GRR20215730)
         </p>
       </footer>
 

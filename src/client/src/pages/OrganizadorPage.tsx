@@ -57,72 +57,72 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Portal do Organizador (ECU 001)</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-xl font-bold text-slate-900">Portal do Organizador (ECU 001)</h1>
+          <p className="text-xs text-slate-500 mt-0.5">
             Gestão de edições do Hackathon, limites de capacidade de equipes e visão geral dos eventos.
           </p>
         </div>
 
         <button
           onClick={onCarregarDemo}
-          className="flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all cursor-pointer w-fit"
+          className="flex items-center space-x-1.5 bg-blue-700 hover:bg-blue-800 text-white px-3.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer w-fit"
         >
-          <Sparkles className="w-4 h-4" />
+          <Sparkles className="w-4 h-4 text-amber-300" />
           <span>Carregar Demonstração UFPR</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Formulário de Criação (ECU 001) */}
-        <div className="lg:col-span-1 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-          <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <PlusCircle className="w-5 h-5 text-amber-400" /> Cadastrar Novo Hackathon
+        <div className="lg:col-span-1 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <PlusCircle className="w-4 h-4 text-blue-700" /> Cadastrar Novo Hackathon
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Nome da Edição</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Nome da Edição</label>
               <input
                 type="text"
                 required
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="Ex: Hackathon DInf UFPR 2026/1"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Data de Início</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Data de Início</label>
                 <input
                   type="date"
                   required
                   value={dataInicio}
                   onChange={(e) => setDataInicio(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Data de Término</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Data de Término</label>
                 <input
                   type="date"
                   required
                   value={dataTermino}
                   onChange={(e) => setDataTermino(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Capacidade Máxima (maxEquipes)
               </label>
               <input
@@ -131,28 +131,28 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
                 required
                 value={maxEquipes}
                 onChange={(e) => setMaxEquipes(parseInt(e.target.value, 10))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
-              <span className="text-[10px] text-slate-500 mt-0.5 block">
+              <span className="text-[11px] text-slate-500 mt-0.5 block">
                 Controla o limite estrito de vagas do evento.
               </span>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Descrição do Evento</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Descrição do Evento</label>
               <textarea
                 rows={3}
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
                 placeholder="Descreva o tema, regulamento e objetivos da maratona..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Salvando...' : 'Salvar e Abrir Inscrições'}
             </button>
@@ -160,14 +160,14 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
         </div>
 
         {/* Visão Geral e Detalhes do Hackathon Selecionado */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
-                <Layers className="w-5 h-5 text-amber-400" /> Detalhes do Evento
+        <div className="lg:col-span-2 space-y-4">
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Layers className="w-4 h-4 text-blue-700" /> Detalhes do Evento
               </h2>
               {dashboard?.hackathon && (
-                <span className="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                <span className="text-xs font-mono text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                   ID: #{dashboard.hackathon.id}
                 </span>
               )}
@@ -176,23 +176,23 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
             {dashboard?.hackathon ? (
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-bold text-white">{dashboard.hackathon.nome}</h3>
-                  <p className="text-xs text-slate-400 mt-1">{dashboard.hackathon.descricao || 'Sem descrição cadastrada.'}</p>
+                  <h3 className="text-base font-bold text-slate-900">{dashboard.hackathon.nome}</h3>
+                  <p className="text-xs text-slate-600 mt-1">{dashboard.hackathon.descricao || 'Sem descrição cadastrada.'}</p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Início</span>
-                    <span className="text-xs font-semibold text-slate-200">{dashboard.hackathon.dataInicio}</span>
+                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Início</span>
+                    <span className="text-xs font-semibold text-slate-800">{dashboard.hackathon.dataInicio}</span>
                   </div>
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Término</span>
-                    <span className="text-xs font-semibold text-slate-200">{dashboard.hackathon.dataTermino}</span>
+                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Término</span>
+                    <span className="text-xs font-semibold text-slate-800">{dashboard.hackathon.dataTermino}</span>
                   </div>
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Ocupação</span>
+                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <span className="text-[10px] uppercase font-medium text-slate-500 block">Ocupação</span>
                     <span className={`text-xs font-bold ${
-                      dashboard.estatisticas.vagasRestantes === 0 ? 'text-rose-400' : 'text-emerald-400'
+                      dashboard.estatisticas.vagasRestantes === 0 ? 'text-rose-600' : 'text-emerald-700'
                     }`}>
                       {dashboard.estatisticas.totalEquipes} / {dashboard.estatisticas.maxEquipes} Equipes
                     </span>
@@ -200,27 +200,27 @@ export const OrganizadorPage: React.FC<OrganizadorPageProps> = ({
                 </div>
 
                 {/* Lista de Equipes Inscritas */}
-                <div className="pt-2">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-amber-400" /> Equipes Inscritas ({dashboard.equipes.length})
+                <div className="pt-1">
+                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-blue-700" /> Equipes Inscritas ({dashboard.equipes.length})
                   </h4>
                   {dashboard.equipes.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {dashboard.equipes.map((eq) => (
-                        <div key={eq.id} className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80 space-y-1">
+                        <div key={eq.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-xs text-white">{eq.nome}</span>
-                            <span className="text-[10px] text-slate-400">{eq.membros.length} membros</span>
+                            <span className="font-semibold text-xs text-slate-900">{eq.nome}</span>
+                            <span className="text-[10px] text-slate-500">{eq.membros.length} membros</span>
                           </div>
-                          <p className="text-[11px] text-slate-400">
+                          <p className="text-[11px] text-slate-600">
                             {eq.membros.map(m => m.nome).join(', ')}
                           </p>
                           {eq.projeto ? (
-                            <p className="text-[10px] text-amber-400/90 font-medium">
+                            <p className="text-[11px] text-blue-700 font-medium">
                               Projeto: {eq.projeto.titulo}
                             </p>
                           ) : (
-                            <p className="text-[10px] text-slate-500 italic">Projeto não submetido</p>
+                            <p className="text-[10px] text-slate-400 italic">Projeto não submetido</p>
                           )}
                         </div>
                       ))}

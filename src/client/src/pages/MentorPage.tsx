@@ -98,68 +98,68 @@ export const MentorPage: React.FC<MentorPageProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       
       {/* Header */}
-      <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
         <div className="flex items-center space-x-2">
-          <Compass className="w-6 h-6 text-amber-400" />
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Portal de Mentorias (ECU 005)</h1>
+          <Compass className="w-5 h-5 text-blue-700" />
+          <h1 className="text-xl font-bold text-slate-900">Portal de Mentorias (ECU 005)</h1>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-0.5">
           Acompanhamento técnico das equipes participantes por mentores e especialistas.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Form 1: Cadastrar Mentor */}
-        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-          <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-amber-400" /> Cadastrar Mentor
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <UserPlus className="w-4 h-4 text-blue-700" /> Cadastrar Mentor
           </h2>
 
-          <form onSubmit={handleCadastrarMentor} className="space-y-4">
+          <form onSubmit={handleCadastrarMentor} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Nome do Mentor</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Nome do Mentor</label>
               <input
                 type="text"
                 required
                 value={nomeMentor}
                 onChange={(e) => setNomeMentor(e.target.value)}
                 placeholder="Ex: Prof. Diego Addan"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">E-mail</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">E-mail</label>
               <input
                 type="email"
                 required
                 value={emailMentor}
                 onChange={(e) => setEmailMentor(e.target.value)}
                 placeholder="Ex: diego.addan@inf.ufpr.br"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Especialidade</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Especialidade</label>
               <input
                 type="text"
                 required
                 value={especialidade}
                 onChange={(e) => setEspecialidade(e.target.value)}
                 placeholder="Ex: Engenharia de Software e Padrões GRASP"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Cadastrando...' : 'Cadastrar Mentor'}
             </button>
@@ -167,19 +167,19 @@ export const MentorPage: React.FC<MentorPageProps> = ({
         </div>
 
         {/* Form 2: Registrar Mentoria (ECU 005) */}
-        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-          <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-amber-400" /> Registrar Mentoria à Equipe (ECU 005)
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <MessageSquare className="w-4 h-4 text-blue-700" /> Registrar Mentoria à Equipe (ECU 005)
           </h2>
 
-          <form onSubmit={handleRegistrarMentoria} className="space-y-4">
+          <form onSubmit={handleRegistrarMentoria} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Mentor Responsável</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Mentor Responsável</label>
               <select
                 required
                 value={selectedMentorId}
                 onChange={(e) => setSelectedMentorId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Selecione o mentor...</option>
                 {mentores.map((m) => (
@@ -191,12 +191,12 @@ export const MentorPage: React.FC<MentorPageProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Equipe Orientada</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Equipe Orientada</label>
               <select
                 required
                 value={selectedEquipeId}
                 onChange={(e) => setSelectedEquipeId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Selecione a equipe...</option>
                 {equipes.map((eq) => (
@@ -208,21 +208,21 @@ export const MentorPage: React.FC<MentorPageProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Orientações e Feedback Técnico</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Orientações e Feedback Técnico</label>
               <textarea
                 rows={3}
                 required
                 value={comentarios}
                 onChange={(e) => setComentarios(e.target.value)}
                 placeholder="Insira as recomendações de arquitetura, domínio e melhorias passadas à equipe..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Registrando...' : 'Registrar Sessão de Mentoria'}
             </button>
@@ -232,23 +232,23 @@ export const MentorPage: React.FC<MentorPageProps> = ({
       </div>
 
       {/* Histórico de Mentorias */}
-      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-        <h2 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-          <FolderKanban className="w-5 h-5 text-amber-400" /> Mentorias Realizadas no Hackathon ({mentorias.length})
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+          <FolderKanban className="w-4 h-4 text-blue-700" /> Mentorias Realizadas no Hackathon ({mentorias.length})
         </h2>
 
         {mentorias.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {mentorias.map((m) => (
-              <div key={m.id} className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2">
+              <div key={m.id} className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xs text-white">{m.mentorNome}</span>
-                  <span className="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">
+                  <span className="font-semibold text-xs text-slate-900">{m.mentorNome}</span>
+                  <span className="text-[11px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-medium">
                     Equipe: {m.equipeNome}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 italic">"{m.comentarios}"</p>
-                <p className="text-[10px] text-slate-500">{new Date(m.dataHora).toLocaleString('pt-BR')}</p>
+                <p className="text-xs text-slate-600 italic">"{m.comentarios}"</p>
+                <p className="text-[10px] text-slate-400">{new Date(m.dataHora).toLocaleString('pt-BR')}</p>
               </div>
             ))}
           </div>
