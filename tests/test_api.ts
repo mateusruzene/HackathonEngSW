@@ -336,12 +336,25 @@ async function runTests() {
     assert.strictEqual(dash.estatisticas.totalAvaliacoes, 3);
   });
 
+  // 16. Verificação de Coesão LCOM (Chidamber & Kemerer)
+  await test('Métrica LCOM: Todas as classes do sistema devem apresentar LCOM = 0 (Alta Coesão)', async () => {
+    const { classesDoSistema, calcularLCOM } = await import('../scripts/calculate_lcom.js');
+    const resultados = classesDoSistema.map(calcularLCOM);
+    for (const r of resultados) {
+      assert.strictEqual(
+        r.lcomCK,
+        0,
+        `A classe ${r.className} deveria ter LCOM = 0, mas obteve LCOM = ${r.lcomCK}`
+      );
+    }
+  });
+
   console.log('\n======================================================');
   console.log(`📊 Resultado Final dos Testes: ${passed}/${total} Aprovados (${Math.round((passed/total)*100)}%)`);
   console.log('======================================================\n');
 
   if (passed === total) {
-    console.log('🎉 Todos os 15 testes foram aprovados com sucesso!\n');
+    console.log(`🎉 Todos os ${total} testes foram aprovados com sucesso!\n`);
     process.exit(0);
   } else {
     console.error('❌ Alguns testes falharam.');

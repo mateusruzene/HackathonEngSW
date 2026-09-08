@@ -42,6 +42,18 @@ export class Hackathon {
   podeReceberEquipe(totalEquipesAtual: number): boolean {
     return totalEquipesAtual < this.maxEquipes;
   }
+
+  obterVagasRestantes(totalEquipesAtual: number): number {
+    return Math.max(0, this.maxEquipes - totalEquipesAtual);
+  }
+
+  estaEmPeriodoValido(dataReferencia: string = new Date().toISOString()): boolean {
+    return dataReferencia >= this.dataInicio && dataReferencia <= this.dataTermino;
+  }
+
+  obterResumo(): string {
+    return `${this.nome} (${this.dataInicio} a ${this.dataTermino}) - Capacidade: ${this.maxEquipes} equipes`;
+  }
 }
 
 export class Participante {
@@ -62,20 +74,53 @@ export class Participante {
     this.curso = parse.data.curso;
     this.grr = parse.data.grr.toUpperCase().trim();
   }
+
+  validarEmailUfpr(): boolean {
+    return this.email.endsWith('@ufpr.br') || this.email.endsWith('@inf.ufpr.br');
+  }
+
+  formatarIdentificacao(): string {
+    return `${this.nome} (${this.grr})`;
+  }
+
+  obterDadosContato(): { nome: string; email: string; curso: string; grr: string } {
+    return {
+      nome: this.nome,
+      email: this.email,
+      curso: this.curso,
+      grr: this.grr
+    };
+  }
 }
 
 export class Equipe {
   id?: number;
   hackathonId: number;
   nome: string;
+  participanteIds: number[] = [];
 
-  constructor(dados: { id?: number; hackathonId: number; nome: string }) {
+  constructor(dados: { id?: number; hackathonId: number; nome: string; participanteIds?: number[] }) {
     if (!dados.hackathonId || !dados.nome) {
       throw new ValidacaoError('Hackathon ID e nome da equipe são obrigatórios');
     }
     this.id = dados.id;
     this.hackathonId = dados.hackathonId;
     this.nome = dados.nome.trim();
+    this.participanteIds = dados.participanteIds || [];
+  }
+
+  associarMembro(participanteId: number): void {
+    if (!this.participanteIds.includes(participanteId)) {
+      this.participanteIds.push(participanteId);
+    }
+  }
+
+  obterIdentificacao(): string {
+    return `Equipe #${this.id ?? 0}: ${this.nome} (${this.participanteIds.length} membros, Hackathon ${this.hackathonId})`;
+  }
+
+  obterTotalMembros(): number {
+    return this.participanteIds.length;
   }
 }
 
@@ -85,8 +130,9 @@ export class Projeto {
   titulo: string;
   descricao: string;
   areaTematica: string;
+  avaliacoes: AvaliacaoDTO[] = [];
 
-  constructor(dados: { id?: number; equipeId: number; titulo: string; descricao: string; areaTematica: string }) {
+  constructor(dados: { id?: number; equipeId: number; titulo: string; descricao: string; areaTematica: string; avaliacoes?: AvaliacaoDTO[] }) {
     const parse = RegistrarProjetoSchema.safeParse(dados);
     if (!parse.success) {
       throw new ValidacaoError(parse.error.errors[0]?.message || 'Dados inválidos para o Projeto');
@@ -96,15 +142,73 @@ export class Projeto {
     this.titulo = parse.data.titulo;
     this.descricao = parse.data.descricao;
     this.areaTematica = parse.data.areaTematica;
+    this.avaliacoes = dados.avaliacoes || [];
   }
 
   // Padrão GRASP Information Expert: O projeto calcula sua própria nota média
-  calcularNotaMedia(avaliacoes: AvaliacaoDTO[] = []): number {
-    if (!avaliacoes || avaliacoes.length === 0) {
+  calcularNotaMedia(avaliacoes?: AvaliacaoDTO[]): number {
+    const lista = (avaliacoes && avaliacoes.length > 0) ? avaliacoes : this.avaliacoes;
+    if (!lista || lista.length === 0) {
       return 0.0;
     }
-    const soma = avaliacoes.reduce((acc, av) => acc + Number(av.nota), 0);
-    return Number((soma / avaliacoes.length).toFixed(2));
+    const soma = lista.reduce((acc, av) => acc + Number(av.nota), 0);
+    return Number((soma / lista.length).toFixed(2));
+  }
+
+  adicionarAvaliacao(avaliacao: AvaliacaoDTO): void {
+    this.avaliacoes.push(avaliacao);
+  }
+
+  obterTotalAvaliacoes(): number {
+    return this.avaliacoes.length;
+  }
+
+  obterResumo(): { titulo: string; areaTematica: string; totalAvaliacoes: number; notaMedia: number } {
+    return {
+      titulo: this.titulo,
+      areaTematica: this.areaTematica,
+      totalAvaliacoes: this.avaliacoes.length,
+      notaMedia: this.calcularNotaMedia()
+    };
+  }
+}
+
+export class Avaliacao {
+  id?: number;
+  juradoId: number;
+  projetoId: number;
+  nota: number;
+  comentarios?: string;
+  dataHora?: string;
+
+  constructor(dados: { id?: number; juradoId: number; projetoId: number; nota: number; comentarios?: string; dataHora?: string }) {
+    const parse = RegistrarAvaliacaoSchema.safeParse(dados);
+    if (!parse.success) {
+      throw new ValidacaoError(parse.error.errors[0]?.message || 'Dados inválidos para a Avaliação');
+    }
+    this.id = dados.id;
+    this.juradoId = parse.data.juradoId;
+    this.projetoId = parse.data.projetoId;
+    this.nota = parse.data.nota;
+    this.comentarios = parse.data.comentarios;
+    this.dataHora = dados.dataHora || new Date().toISOString();
+  }
+
+  validarNota(): boolean {
+    return this.nota >= 0.0 && this.nota <= 10.0;
+  }
+
+  obterNotaFormatada(): string {
+    return this.nota.toFixed(2);
+  }
+
+  possuiComentarios(): boolean {
+    return Boolean(this.comentarios && this.comentarios.trim().length > 0);
+  }
+
+  obterResumoParecer(): string {
+    const feedback = this.comentarios ? ` - Parecer: "${this.comentarios}"` : '';
+    return `Nota ${this.obterNotaFormatada()}${feedback}`;
   }
 }
 
@@ -145,5 +249,20 @@ export class ItemClassificacao {
     this.notaMedia = dados.notaMedia;
     this.totalAvaliacoes = dados.totalAvaliacoes;
     this.avaliacoes = dados.avaliacoes || [];
+  }
+
+  estaNoPodio(): boolean {
+    return this.posicao >= 1 && this.posicao <= 3;
+  }
+
+  obterRotuloPosicao(): string {
+    if (this.posicao === 1) return '🥇 1º Lugar (Campeão)';
+    if (this.posicao === 2) return '🥈 2º Lugar (Vice-campeão)';
+    if (this.posicao === 3) return '🥉 3º Lugar';
+    return `${this.posicao}º Lugar`;
+  }
+
+  obterResumoDesempenho(): string {
+    return `${this.obterRotuloPosicao()}: ${this.nomeEquipe} - Projeto "${this.projetoTitulo}" (Média: ${this.notaMedia.toFixed(2)}, ${this.totalAvaliacoes} avaliações)`;
   }
 }

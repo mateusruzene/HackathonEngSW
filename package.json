@@ -14,6 +14,7 @@
     "start": "tsx src/server/index.ts",
     "start:prod": "node dist/server/index.js",
     "test": "tsx tests/test_api.ts",
+    "metrics:lcom": "tsx scripts/calculate_lcom.ts",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down"
   },

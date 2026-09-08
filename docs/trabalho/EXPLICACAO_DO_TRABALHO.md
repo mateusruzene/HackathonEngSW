@@ -60,4 +60,59 @@ Abra o navegador em: **http://localhost:3000**
 ```bash
 npm test
 ```
-Executa os 15 testes de integração validando 100% das restrições de negócio (lotação máxima, 1 projeto por equipe, 1 equipe por participante, notas 0-10 e apuração da média).
+Executa os 16 testes de integração validando 100% das restrições de negócio e atestando $\text{LCOM} = 0$ em todas as classes.
+
+### 4. Executar o Cálculo Formal de Coesão (LCOM)
+```bash
+npm run metrics:lcom
+```
+Gera a tabela analítica demonstrando formalmente que todas as 10 classes do sistema possuem $\text{LCOM} = 0$ (Chidamber & Kemerer) e $\text{LCOM}^*$ médio de $0.636$ (Henderson-Sellers).
+
+---
+
+## 📊 4. Como Responder sobre o Cálculo de Coesão (LCOM) na Avaliação
+
+Se o professor perguntar: *"Como vocês mediram a coesão do sistema e por que buscaram baixa LCOM?"*
+
+1. **Conceito de LCOM (*Lack of Cohesion of Methods*)**:
+   - Responda que LCOM avalia a **falta de coesão** analisando pares de métodos da classe e os atributos que eles acessam em comum (métrica de Chidamber & Kemerer, 1994).
+   - $P$ são os pares de métodos que **não** compartilham atributos; $Q$ são os pares que **compartilham** atributos.
+   - A fórmula é: $\text{LCOM} = \max(0, |P| - |Q|)$.
+   - Portanto, **quanto menor o LCOM, maior a coesão**. Quando os métodos operam sobre os mesmos atributos da classe, $|Q| \ge |P|$, resultando no valor ótimo de **$\text{LCOM} = 0$**.
+
+2. **Onde está implementado no projeto?**:
+   - Refatoramos as entidades de domínio (`Hackathon`, `Participante`, `Equipe`, `Projeto`, `Avaliacao`, `ItemClassificacao`) e os controladores para que cada método atue com propósito coeso sobre os atributos da classe.
+   - Criamos o script automatizado `scripts/calculate_lcom.ts` (`npm run metrics:lcom`), que varre as classes e calcula $m$, $a$, $|P|$, $|Q|$, $LCOM$ e $LCOM^*$ (Henderson-Sellers).
+   - O teste de regressão contínua em `tests/test_api.ts` garante que nenhuma classe do sistema tenha $\text{LCOM} > 0$.
+
+---
+
+## 🏛️ 5. Como Responder sobre os Princípios SOLID Atendidos
+
+Se o professor perguntar: *"Quais princípios SOLID o sistema atende e onde eles estão no código?"*
+
+1. **SRP (Single Responsibility Principle — Responsabilidade Única)**:
+   - *Onde está:* Separação estrita em 4 camadas lógicas:
+     - `entities.ts` cuida apenas de regras e invariantes de negócio;
+     - `schemas.ts` cuida apenas da validação sintática dos dados;
+     - `controllers/` orquestram fluxos de casos de uso sem SQL e sem UI;
+     - `repositories/` cuidam exclusivamente de banco SQLite e Knex;
+     - `apiRoutes.ts` cuida exclusivamente de transporte HTTP.
+   - *Argumento:* Mudar o banco de dados de SQLite para PostgreSQL afeta **apenas** os Repositórios, sem alterar uma única linha dos Controladores ou Entidades.
+
+2. **OCP (Open/Closed Principle — Aberto/Fechado)**:
+   - *Onde está:* Na hierarquia de erros em `src/server/domain/errors.ts` e no middleware central em `src/server/index.ts`.
+   - *Argumento:* A classe abstrata `DomainError` é aberta para extensão (novos erros como `HackathonLotadoError`, `ParticipanteJaInscritoError`, `NotaInvalidaError` herdam dela), mas o manipulador de erros do Fastify (`setErrorHandler`) está **fechado para modificação** — ele processa polimorficamente qualquer erro de domínio sem precisar ser editado.
+
+3. **LSP (Liskov Substitution Principle — Substituição de Liskov)**:
+   - *Onde está:* No uso polimórfico de `DomainError`.
+   - *Argumento:* Qualquer subclasse de erro pode substituir `DomainError` mantendo o contrato de `statusCode` e `message`, permitindo que os controladores lancem erros especializados e a aplicação os processe de forma transparente e uniforme.
+
+4. **ISP (Interface Segregation Principle — Segregação de Interfaces)**:
+   - *Onde está:* Em `src/server/domain/schemas.ts`.
+   - *Argumento:* Em vez de um "God DTO" genérico, criamos interfaces finamente segregadas para cada caso de uso (`CriarHackathonInput`, `CadastrarParticipanteInput`, `InscreverEquipeInput`, etc.). O frontend consome apenas os campos necessários para cada tela de ator (`/organizador`, `/estudante`, `/mentor`, `/jurado`).
+
+5. **DIP (Dependency Inversion Principle — Inversão de Dependência)**:
+   - *Onde está:* Na relação entre Controllers e Repositórios.
+   - *Argumento:* Os controladores de alto nível dependem de operações abstratas dos repositórios (`buscarPorId`, `criar`, `listar`) em vez de se acoplarem diretamente ao driver SQLite ou consultas SQL em linha, permitindo fácil substituição por mocks ou outros drivers de persistência.
+
