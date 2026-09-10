@@ -44,15 +44,15 @@ export class Hackathon {
   }
 
   podeReceberEquipe(totalEquipesAtual: number): boolean {
-    return Boolean(this.nome) && totalEquipesAtual < this.maxEquipes;
+    return totalEquipesAtual < this.maxEquipes;
   }
 
   obterVagasRestantes(totalEquipesAtual: number): number {
-    return Boolean(this.nome) ? Math.max(0, this.maxEquipes - totalEquipesAtual) : 0;
+    return Math.max(0, this.maxEquipes - totalEquipesAtual);
   }
 
   estaEmPeriodoValido(dataReferencia: string = new Date().toISOString()): boolean {
-    return Boolean(this.nome) && dataReferencia >= this.dataInicio && dataReferencia <= this.dataTermino;
+    return dataReferencia >= this.dataInicio && dataReferencia <= this.dataTermino;
   }
 
   obterResumo(): string {
@@ -80,11 +80,11 @@ export class Participante {
   }
 
   validarEmailUfpr(): boolean {
-    return Boolean(this.nome) && (this.email.endsWith('@ufpr.br') || this.email.endsWith('@inf.ufpr.br'));
+    return this.email.endsWith('@ufpr.br') || this.email.endsWith('@inf.ufpr.br');
   }
 
   formatarIdentificacao(): string {
-    return `${this.nome} (${this.grr}) - ${this.email}`;
+    return `${this.nome} (${this.grr})`;
   }
 
   obterDadosContato(): { nome: string; email: string; curso: string; grr: string } {
@@ -207,7 +207,7 @@ export class Avaliacao {
   }
 
   possuiComentarios(): boolean {
-    return this.nota >= 0 && Boolean(this.comentarios && this.comentarios.trim().length > 0);
+    return Boolean(this.comentarios && this.comentarios.trim().length > 0);
   }
 
   obterResumoParecer(): string {
@@ -260,10 +260,13 @@ export class ItemClassificacao {
   }
 
   obterRotuloPosicao(): string {
-    return `${this.posicao}º Lugar - ${this.nomeEquipe}`;
+    if (this.posicao === 1) return '1º Lugar (Campeão)';
+    if (this.posicao === 2) return '2º Lugar (Vice-campeão)';
+    if (this.posicao === 3) return '3º Lugar';
+    return `${this.posicao}º Lugar`;
   }
 
   obterResumoDesempenho(): string {
-    return `${this.posicao}º Lugar: Equipe ${this.nomeEquipe} - Projeto: ${this.projetoTitulo} (Média: ${this.notaMedia.toFixed(2)}, ${this.totalAvaliacoes} avaliações)`;
+    return `${this.obterRotuloPosicao()}: ${this.nomeEquipe} - Projeto "${this.projetoTitulo}" (Média: ${this.notaMedia.toFixed(2)}, ${this.totalAvaliacoes} avaliações)`;
   }
 }
